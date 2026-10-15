@@ -1,1 +1,6 @@
-{}
+{
+  "brand": "Fiesta Motors, inicio",
+  "hero": { "eyebrow": "Woodbridge, Ontario", "title": "Elige tu próximo auto", "cta": "Ver unidades", "play": "Reproducir video" },
+  "units": { "title": "Unidades", "list": "Lista de unidades", "km": "Kilometraje", "owners": "Dueños", "condition": "Condición", "color": "Color", "engine": "Motor", "trans": "Transmisión", "drive": "Tracción", "consult": "Consultar", "photo": "Foto real próximamente", "illustrative": "Modelo 3D ilustrativo · ver fotos reales", "testdrive": "Agendar test drive", "payment": "Calcular pago", "ask": "Preguntar al asistente", "askSoon": "Disponible pronto", "tax": "+ HST y licencia", "unit": "unidad" },
+  "contact": { "title": "Contacto", "city": "Woodbridge, Ontario", "hours": "Horario: Consultar" }
+}
