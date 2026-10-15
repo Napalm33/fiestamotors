@@ -29,7 +29,35 @@
         <button class="hero__play" id="hero-play" type="button" hidden data-i18n-aria="hero.play"></button>
       </section>
 
-      <section class="units" id="units" aria-labelledby="units-title">
+
+      <section class="showroom" id="showroom" aria-labelledby="sr-title">
+        <div class="sr__stage" id="sr-stage">
+          <canvas id="sr-canvas" aria-hidden="true"></canvas>
+          <div class="sr__veil" id="sr-veil"></div>
+
+          <div class="sr__garage" id="sr-garage">
+            <div class="sr__copy">
+              <h2 id="sr-title"></h2>
+              <p data-i18n="showroom.hint"></p>
+            </div>
+            <div class="sr__card" id="sr-card" aria-live="polite"></div>
+            <div class="sr__nav">
+              <button type="button" id="sr-prev" data-i18n-aria="showroom.prev">‹</button>
+              <span id="sr-count" aria-live="polite"></span>
+              <button type="button" id="sr-next" data-i18n-aria="showroom.next">›</button>
+            </div>
+          </div>
+
+          <div class="sr__viewer" id="sr-viewer" hidden>
+            <button type="button" class="sr__back" id="sr-back" data-i18n="showroom.back"></button>
+            <div class="sr__views" id="sr-views" role="group" data-i18n-aria="showroom.views"></div>
+            <p class="sr__drag" data-i18n="showroom.drag"></p>
+            <aside class="sr__panel" id="sr-panel"></aside>
+          </div>
+        </div>
+      </section>
+
+      <section class="units" id="units" aria-labelledby="units-title" hidden>
         <h2 id="units-title" data-i18n="units.title"></h2>
         <div class="strip" id="strip" role="listbox" tabindex="0" data-i18n-aria="units.list"></div>
         <article class="detail" id="detail" aria-live="polite"></article>

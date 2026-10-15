@@ -1,27 +1,42 @@
 import inventory from '../data/inventory.json';
 import es from './i18n/es.json';
 import en from './i18n/en.json';
+import { Showroom } from './showroom/showroom.js';
 
 const dicts = { es, en };
 const $ = (s, r = document) => r.querySelector(s);
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const force3d = /[?&]force3d/.test(location.search);
 
 let lang = (navigator.language || 'es').toLowerCase().startsWith('en') ? 'en' : 'es';
 let selected = 0;
+let sr = null; // instancia del showroom 3D
 
 const t = (path) => path.split('.').reduce((o, k) => o?.[k], dicts[lang]) ?? path;
-const money = (n) => (n == null ? t('units.consult') : new Intl.NumberFormat(lang === 'en' ? 'en-CA' : 'es-CA', { style: 'currency', currency: 'CAD', maximumFractionDigits: 0 }).format(n));
-const km = (n) => (n == null ? t('units.consult') : `${new Intl.NumberFormat(lang === 'en' ? 'en-CA' : 'es-CA').format(n)} km`);
+const money = (n) => (n == null ? t('units.consult') : new Intl.NumberFormat(lang === 'en' ? 'en-CA' : 'es-MX', { style: 'currency', currency: 'CAD', maximumFractionDigits: 0 }).format(n));
+const km = (n) => (n == null ? t('units.consult') : `${new Intl.NumberFormat(lang === 'en' ? 'en-CA' : 'es-MX').format(n)} km`);
 const val = (v) => (v === null || v === undefined || v === '' ? t('units.consult') : v);
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const specRows = (u) => {
+  const spec = (k, v) => `<div><dt>${t('units.' + k)}</dt><dd>${esc(v)}</dd></div>`;
+  return spec('km', km(u.odometer_km)) + spec('owners', val(u.owners)) + spec('color', val(u.color)) + spec('engine', val(u.engine)) + spec('trans', val(u.transmission)) + spec('drive', val(u.drivetrain)) + spec('condition', val(u.condition_notes));
+};
+const actions = () => `
+  <div class="actions">
+    <a class="btn btn--red" href="https://woodbridge.fiestamotors.ca/book-a-test-drive/" target="_blank" rel="noopener">${t('units.testdrive')}</a>
+    <a class="btn btn--ghost" aria-disabled="true" href="#showroom" title="${t('units.askSoon')}">${t('units.payment')}</a>
+    <a class="btn btn--ghost" aria-disabled="true" href="#showroom" title="${t('units.askSoon')}">${t('units.ask')}</a>
+  </div>`;
 
+/* ---------- Textos y plan B (franja HTML sin 3D) ---------- */
 function applyStatic() {
   document.documentElement.lang = lang;
   document.querySelectorAll('[data-i18n]').forEach((el) => (el.textContent = t(el.dataset.i18n)));
   document.querySelectorAll('[data-i18n-aria]').forEach((el) => el.setAttribute('aria-label', t(el.dataset.i18nAria)));
   $('#lang').textContent = lang === 'es' ? 'EN' : 'ES';
+  const n = inventory.length, word = t('showroom.nums')[n] ?? n;
+  $('#sr-title').innerHTML = `${esc(word)} ${t(n === 1 ? 'showroom.car' : 'showroom.cars')}.<em>${t('showroom.pick')}</em>`;
 }
-
 function renderStrip() {
   $('#strip').innerHTML = inventory.map((u, i) => `
     <button class="card" role="option" type="button" data-i="${i}" aria-selected="${i === selected}">
@@ -30,10 +45,8 @@ function renderStrip() {
       <div class="card__price">${money(u.price)}</div>
     </button>`).join('');
 }
-
 function renderDetail() {
   const u = inventory[selected];
-  const spec = (k, v) => `<div><dt>${t('units.' + k)}</dt><dd>${esc(v)}</dd></div>`;
   $('#detail').innerHTML = `
     <div>
       <div class="detail__photo">${t('units.photo')}</div>
@@ -44,54 +57,94 @@ function renderDetail() {
       <p class="detail__trim">${esc(u.trim)}</p>
       <p class="detail__price">${money(u.price)}</p>
       <p class="detail__tax">${u.price == null ? '' : t('units.tax')}</p>
-      <dl class="specs">
-        ${spec('km', km(u.odometer_km))}
-        ${spec('owners', val(u.owners))}
-        ${spec('color', val(u.color))}
-        ${spec('engine', val(u.engine))}
-        ${spec('trans', val(u.transmission))}
-        ${spec('drive', val(u.drivetrain))}
-        ${spec('condition', val(u.condition_notes))}
-      </dl>
-      <div class="actions">
-        <a class="btn btn--red" href="https://woodbridge.fiestamotors.ca/book-a-test-drive/" target="_blank" rel="noopener">${t('units.testdrive')}</a>
-        <a class="btn btn--ghost" aria-disabled="true" href="#units" title="${t('units.askSoon')}">${t('units.payment')}</a>
-        <a class="btn btn--ghost" aria-disabled="true" href="#units" title="${t('units.askSoon')}">${t('units.ask')}</a>
-      </div>
+      <dl class="specs">${specRows(u)}</dl>
+      ${actions()}
     </div>`;
 }
-
-function select(i) {
-  selected = (i + inventory.length) % inventory.length;
-  renderStrip();
-  renderDetail();
+function selectFallback(i) { selected = (i + inventory.length) % inventory.length; renderStrip(); renderDetail(); }
+function enableFallback() {
+  sr?.stop(); $('#showroom').hidden = true; $('#units').hidden = false;
+  renderStrip(); renderDetail();
 }
-
-$('#strip').addEventListener('click', (e) => {
-  const b = e.target.closest('.card');
-  if (b) select(+b.dataset.i);
-});
+$('#strip').addEventListener('click', (e) => { const b = e.target.closest('.card'); if (b) selectFallback(+b.dataset.i); });
 $('#strip').addEventListener('keydown', (e) => {
-  if (e.key === 'ArrowRight') { e.preventDefault(); select(selected + 1); $('.card[aria-selected="true"]').focus(); }
-  if (e.key === 'ArrowLeft') { e.preventDefault(); select(selected - 1); $('.card[aria-selected="true"]').focus(); }
+  if (e.key === 'ArrowRight') { e.preventDefault(); selectFallback(selected + 1); $('.card[aria-selected="true"]').focus(); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); selectFallback(selected - 1); $('.card[aria-selected="true"]').focus(); }
 });
-$('#detail').addEventListener('click', (e) => { if (e.target.closest('[aria-disabled="true"]')) e.preventDefault(); });
-$('#lang').addEventListener('click', () => { lang = lang === 'es' ? 'en' : 'es'; applyStatic(); renderStrip(); renderDetail(); });
 
-// Video de fondo: con "reducir movimiento" no se reproduce solo.
-const video = $('#hero-video');
-const play = $('#hero-play');
-if (reduce) {
-  video.removeAttribute('autoplay');
-  play.hidden = false;
-  play.addEventListener('click', () => { video.play(); play.hidden = true; });
-} else {
-  video.play().catch(() => { play.hidden = false; play.addEventListener('click', () => { video.play(); play.hidden = true; }); });
+/* ---------- Showroom 3D ---------- */
+function renderGarageUI() {
+  const u = inventory[sr.focus];
+  $('#sr-count').textContent = `${String(sr.focus + 1).padStart(2, '0')} / ${String(inventory.length).padStart(2, '0')}`;
+  $('#sr-card').innerHTML = `
+    <h3>${u.year} ${esc(u.make)} ${esc(u.model)}</h3>
+    <p class="k">${esc(u.trim)}</p>
+    <div class="row"><span>${money(u.price)}</span><span>${km(u.odometer_km)}</span></div>
+    <button class="btn btn--red" type="button" id="sr-open">${t('showroom.open')}</button>`;
 }
+function renderViewerUI() {
+  const u = inventory[sr.focus];
+  $('#sr-panel').innerHTML = `
+    <label for="sr-switch">${t('showroom.switch')}</label>
+    <select id="sr-switch">${inventory.map((x, i) => `<option value="${i}" ${i === sr.focus ? 'selected' : ''}>${x.year} ${esc(x.make)} ${esc(x.model)}</option>`).join('')}</select>
+    <h3>${u.year} ${esc(u.make)} ${esc(u.model)}</h3>
+    <p class="detail__trim">${esc(u.trim)}</p>
+    <p class="detail__price">${money(u.price)}</p>
+    <p class="detail__tax">${u.price == null ? '' : t('units.tax')}</p>
+    <dl class="specs">${specRows(u)}</dl>
+    ${actions()}
+    ${u.model3d_illustrative ? `<p class="tag">${t('units.illustrative')}</p>` : ''}`;
+  $('#sr-views').innerHTML = Object.keys(t('showroom.v')).map((k) => `<button type="button" data-v="${k}" aria-pressed="false">${t('showroom.v.' + k)}</button>`).join('');
+}
+function refreshShowroomUI() { if (!sr) return; renderGarageUI(); if (sr.mode === 'viewer') renderViewerUI(); }
+
+function initShowroom() {
+  try {
+    sr = new Showroom({
+      canvas: $('#sr-canvas'), veil: $('#sr-veil'), units: inventory, reduceMotion: reduce, force: force3d,
+      hooks: {
+        onFocus: () => refreshShowroomUI(),
+        onMode: (mode) => { $('#sr-garage').hidden = mode === 'viewer'; $('#sr-viewer').hidden = mode !== 'viewer'; refreshShowroomUI(); },
+        onFallback: enableFallback,
+      },
+    });
+  } catch (err) { console.warn('WebGL no disponible, usando plan B', err); return enableFallback(); }
+  refreshShowroomUI();
+
+  $('#sr-prev').addEventListener('click', () => sr.prev());
+  $('#sr-next').addEventListener('click', () => sr.next());
+  $('#sr-back').addEventListener('click', () => sr.close());
+  $('#sr-garage').addEventListener('click', (e) => { if (e.target.closest('#sr-open')) sr.open(); });
+  $('#sr-views').addEventListener('click', (e) => {
+    const b = e.target.closest('button'); if (!b) return;
+    sr.setView(b.dataset.v); $('#sr-views').querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+  });
+  $('#sr-panel').addEventListener('change', (e) => { if (e.target.id === 'sr-switch') sr.switchUnit(+e.target.value); });
+  $('#sr-panel').addEventListener('click', (e) => { if (e.target.closest('[aria-disabled="true"]')) e.preventDefault(); });
+  addEventListener('keydown', (e) => {
+    const r = $('#showroom').getBoundingClientRect(); if (r.bottom < 0 || r.top > innerHeight || e.target.matches('select, input')) return;
+    if (e.key === 'ArrowRight') sr.next(); else if (e.key === 'ArrowLeft') sr.prev();
+    else if (e.key === 'Enter' && sr.mode === 'garage' && !e.target.closest('a, button')) sr.open();
+    else if (e.key === 'Escape') sr.close();
+  });
+
+  // Solo se dibuja cuando el showroom está en pantalla; la cámara entra al llegar con el scroll.
+  new IntersectionObserver(([en]) => {
+    if (en.isIntersecting) { sr.start(); if (en.intersectionRatio > 0.35) sr.intro(); } else sr.stop();
+  }, { threshold: [0, 0.35] }).observe($('#showroom'));
+  document.addEventListener('visibilitychange', () => { if (document.hidden) sr.stop(); });
+}
+
+$('#lang').addEventListener('click', () => { lang = lang === 'es' ? 'en' : 'es'; applyStatic(); refreshShowroomUI(); if (!$('#units').hidden) { renderStrip(); renderDetail(); } });
+$('#detail').addEventListener('click', (e) => { if (e.target.closest('[aria-disabled="true"]')) e.preventDefault(); });
+
+/* ---------- Video de fondo ---------- */
+const video = $('#hero-video'), play = $('#hero-play');
+const showPlay = () => { play.hidden = false; play.addEventListener('click', () => { video.play(); play.hidden = true; }, { once: true }); };
+if (reduce) showPlay(); else video.play().catch(showPlay);
 
 const bar = $('.bar');
 addEventListener('scroll', () => bar.classList.toggle('solid', scrollY > 40), { passive: true });
 
 applyStatic();
-renderStrip();
-renderDetail();
+initShowroom();

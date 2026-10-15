@@ -1,6 +1,69 @@
 {
   "brand": "Fiesta Motors, home",
-  "hero": { "eyebrow": "Woodbridge, Ontario", "title": "Choose your next car", "cta": "See vehicles", "play": "Play video" },
-  "units": { "title": "Vehicles", "list": "Vehicle list", "km": "Odometer", "owners": "Owners", "condition": "Condition", "color": "Colour", "engine": "Engine", "trans": "Transmission", "drive": "Drivetrain", "consult": "Ask us", "photo": "Real photo coming soon", "illustrative": "Illustrative 3D model · see real photos", "testdrive": "Book a test drive", "payment": "Calculate payment", "ask": "Ask the assistant", "askSoon": "Coming soon", "tax": "+ HST and licensing", "unit": "vehicle" },
-  "contact": { "title": "Contact", "city": "Woodbridge, Ontario", "hours": "Hours: Ask us" }
+  "hero": {
+    "eyebrow": "Woodbridge, Ontario",
+    "title": "Choose your next car",
+    "cta": "See vehicles",
+    "play": "Play video"
+  },
+  "units": {
+    "title": "Vehicles",
+    "list": "Vehicle list",
+    "km": "Odometer",
+    "owners": "Owners",
+    "condition": "Condition",
+    "color": "Colour",
+    "engine": "Engine",
+    "trans": "Transmission",
+    "drive": "Drivetrain",
+    "consult": "Ask us",
+    "photo": "Real photo coming soon",
+    "illustrative": "Illustrative 3D model · see real photos",
+    "testdrive": "Book a test drive",
+    "payment": "Calculate payment",
+    "ask": "Ask the assistant",
+    "askSoon": "Coming soon",
+    "tax": "+ HST and licensing",
+    "unit": "vehicle"
+  },
+  "contact": {
+    "title": "Contact",
+    "city": "Woodbridge, Ontario",
+    "hours": "Hours: Ask us"
+  },
+  "showroom": {
+    "hint": "Tap a car or use the arrows.",
+    "prev": "Previous car",
+    "next": "Next car",
+    "back": "← All cars",
+    "drag": "Drag to turn the car",
+    "views": "Car views",
+    "cars": "cars",
+    "car": "car",
+    "pick": "Pick yours.",
+    "open": "View vehicle",
+    "switch": "Switch vehicle",
+    "v": {
+      "three": "Three-quarter",
+      "front": "Front",
+      "side": "Side",
+      "rear": "Rear",
+      "top": "Top"
+    },
+    "nums": [
+      "Zero",
+      "One",
+      "Two",
+      "Three",
+      "Four",
+      "Five",
+      "Six",
+      "Seven",
+      "Eight",
+      "Nine",
+      "Ten",
+      "Eleven",
+      "Twelve"
+    ]
+  }
 }
