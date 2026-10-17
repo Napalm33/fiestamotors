@@ -13,3 +13,9 @@ Assets con licencia usados en el proyecto. Cada entrada: nombre, autor, licencia
 
 ## Nissan Rogue 2022 (modelo de prueba)
 - Origen: archivo compartido por Alan en Drive (`3D_models/2022_nissan_rogue.glb`). Licencia **pendiente de confirmar** (falta el enlace de Sketchfab). Mientras tanto el `.glb` está en `.gitignore` y no se publica. Materiales reasignados por nombre (el archivo venía sin colores) y pintura recoloreada a rojo; geometría simplificada.
+
+## Chevrolet Silverado 1500 RST 2020 (modelo de prueba)
+- Origen: `3D_models/2020_chevrolet_silverado_1500_rst.glb` compartido por Alan en Drive. Licencia **pendiente de confirmar** (falta el enlace de Sketchfab); el `.glb` optimizado está en `.gitignore`. Se oscureció la parrilla para parecerse a la versión WT; la pintura se recolorea a blanco.
+
+## Fotos recortadas (HR-V, Crosstrek)
+- `public/photos/cutouts/*.webp`: recortes de las fotos de estudio del inventario del dealer, usados como marcador ilustrativo hasta tener el modelo 3D. **Confirmar con el dealer el derecho a usar esas fotos.**

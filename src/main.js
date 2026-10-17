@@ -50,7 +50,7 @@ function renderDetail() {
   $('#detail').innerHTML = `
     <div>
       <div class="detail__photo">${t('units.photo')}</div>
-      ${u.model3d_illustrative ? `<span class="tag">${t('units.illustrative')}</span>` : ''}
+      ${u.model3d_illustrative ? `<span class="tag">${t(u.photo_cutout ? 'units.illustrativePhoto' : 'units.illustrative')}</span>` : ''}
     </div>
     <div>
       <h3 class="detail__title">${u.year} ${esc(u.make)} ${esc(u.model)}</h3>
@@ -93,7 +93,7 @@ function renderViewerUI() {
     <p class="detail__tax">${u.price == null ? '' : t('units.tax')}</p>
     <dl class="specs">${specRows(u)}</dl>
     ${actions()}
-    ${u.model3d_illustrative ? `<p class="tag">${t('units.illustrative')}</p>` : ''}`;
+    ${u.model3d_illustrative ? `<p class="tag">${t(u.photo_cutout ? 'units.illustrativePhoto' : 'units.illustrative')}</p>` : ''}`;
   $('#sr-views').innerHTML = Object.keys(t('showroom.v')).map((k) => `<button type="button" data-v="${k}" aria-pressed="false">${t('showroom.v.' + k)}</button>`).join('');
 }
 function refreshShowroomUI() { if (!sr) return; renderGarageUI(); if (sr.mode === 'viewer') renderViewerUI(); }
@@ -104,7 +104,7 @@ function initShowroom() {
       canvas: $('#sr-canvas'), veil: $('#sr-veil'), units: inventory, reduceMotion: reduce, force: force3d,
       hooks: {
         onFocus: () => refreshShowroomUI(),
-        onMode: (mode) => { $('#sr-garage').hidden = mode === 'viewer'; $('#sr-viewer').hidden = mode !== 'viewer'; refreshShowroomUI(); },
+        onMode: (mode, i) => { $('#sr-views').hidden = $('.sr__drag').hidden = !!inventory[i]?.photo_cutout; $('#sr-garage').hidden = mode === 'viewer'; $('#sr-viewer').hidden = mode !== 'viewer'; refreshShowroomUI(); },
         onFallback: enableFallback,
       },
     });

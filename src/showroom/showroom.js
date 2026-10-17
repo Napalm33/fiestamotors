@@ -4,6 +4,7 @@ import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment
 import gsap from 'gsap';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
+import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
 import { buildCar, bodyKind, SIZES } from './cars.js';
 import { buildLoftCar } from './loft.js';
 import { SPECS } from './specs.js';
@@ -103,14 +104,54 @@ export class Showroom {
       if (/glass/i.test(nm) && /light|lamp|head|brake|tail|signal/i.test(nm)) { m.transparent = true; m.opacity = 0.38; m.depthWrite = false; m.roughness = 0.05; m.metalness = 0; m.envMapIntensity = 1.4; if (m.color.getHex() === 0xffffff) m.color.set('#e4e8ee'); }
       else if (/(glass|window|windshield|cristal)s?$/i.test(nm)) { m.transparent = true; m.opacity = Math.min(m.opacity, 0.3); m.depthWrite = false; m.roughness = 0.04; m.metalness = 0; m.envMapIntensity = 1.4; m.color.set('#05070a'); }
       // Recolorea la pintura de la carrocería (material "CarPaint") al color de la unidad.
-      if (u.model3d_paint && m.name === 'CarPaint') m.color.set(u.model3d_paint);
+      if (u.model3d_paint && m.name === 'CarPaint') { m.color.set(u.model3d_paint); if (u.model3d_paint_flat) { m.map = null; m.aoMap = null; } }
       // Rines: se oscurecen para igualar los de la unidad (el modelo trae rines plateados).
       if (u.model3d_rims && /Rim_/.test(`${o.name} ${o.parent?.name || ''}`)) { o.material = m.clone(); o.material.color.set(u.model3d_rims); }
       // Los modelos generados con IA traen relieve ruidoso: se suaviza la pintura.
       if (u.model3d_smooth !== false) { m.normalMap = null; m.roughness = Math.min(1, Math.max(m.roughness ?? 0.5, 0.38)); }
       m.needsUpdate = true;
     });
+    if (u.model3d_seats) car.add(this.buildSeats(u.model3d_seats));
     car.userData = { kind: bodyKind(u), length: size.z * k, width: size.x * k, glb: true };
+    return car;
+  }
+  /* Asientos de relleno para modelos que vienen sin interior: dos butacas delanteras y banca trasera. Medidas en metros reales. */
+  buildSeats(o) {
+    const g = new THREE.Group(), mat = new THREE.MeshStandardMaterial({ color: o.color || '#17181a', roughness: 0.72, metalness: 0 });
+    const box = (w, h, d, r = 0.04) => new THREE.Mesh(new RoundedBoxGeometry(w, h, d, 3, r), mat);
+    const seat = (x, z, w, heads) => {
+      const s = new THREE.Group();
+      const cu = box(w, 0.13, 0.52); cu.position.set(0, 0.5, 0);
+      const bk = box(w, 0.62, 0.13, 0.05); bk.position.set(0, 0.84, -0.3); bk.rotation.x = -0.2;
+      s.add(cu, bk);
+      heads.forEach((hx) => { const h = box(0.2, 0.2, 0.1, 0.04); h.position.set(hx, 1.27, -0.37); h.rotation.x = -0.2; s.add(h); });
+      s.position.set(x, 0, z); return s;
+    };
+    const fx = o.front_x ?? 0.37;
+    g.add(seat(-fx, o.front_z, 0.5, [0]), seat(fx, o.front_z, 0.5, [0]), seat(0, o.rear_z, o.rear_w ?? 1.32, [-0.4, 0, 0.4]));
+    g.position.y = o.y || 0;
+    return g;
+  }
+  /* Unidades sin modelo 3D: foto recortada de pie sobre la plataforma, siempre de frente a la cámara, con reflejo en el piso. */
+  buildPhotoCar(u) {
+    const kind = bodyKind(u), { L, W } = SIZES[kind], car = new THREE.Group(), board = new THREE.Group();
+    car.userData = { kind, length: L, width: W, photo: true, board };
+    car.add(board);
+    const sh = this.contactShadow(L * 0.8, W * 0.7); sh.position.z = W * 0.45; board.add(sh);
+    new THREE.TextureLoader().load(new URL(u.photo_cutout, document.baseURI).href, (tex) => {
+      tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 4;
+      const img = tex.image, w = L * 0.94, h = w * img.height / img.width;
+      const mat = (map, o = 1) => new THREE.MeshBasicMaterial({ map, transparent: true, opacity: o, depthWrite: false, fog: false, color: '#dcdcdc', toneMapped: false });
+      const photo = new THREE.Mesh(new THREE.PlaneGeometry(w, h), mat(tex)); photo.position.set(0, h / 2 - 0.03, W * 0.45); photo.renderOrder = 2;
+      // Reflejo: la foto invertida que se desvanece hacia abajo.
+      const cv = document.createElement('canvas'); cv.width = 512; cv.height = Math.round(512 * img.height / img.width);
+      const c = cv.getContext('2d'); c.translate(0, cv.height); c.scale(1, -1); c.drawImage(img, 0, 0, cv.width, cv.height); c.setTransform(1, 0, 0, 1, 0, 0);
+      const gr = c.createLinearGradient(0, 0, 0, cv.height); gr.addColorStop(0, 'rgba(0,0,0,.55)'); gr.addColorStop(.55, 'rgba(0,0,0,0)');
+      c.globalCompositeOperation = 'destination-in'; c.fillStyle = gr; c.fillRect(0, 0, cv.width, cv.height);
+      const rt = new THREE.CanvasTexture(cv); rt.colorSpace = THREE.SRGBColorSpace;
+      const refl = new THREE.Mesh(new THREE.PlaneGeometry(w, h), mat(rt, 0.5)); refl.position.set(0, -h / 2 - 0.03, W * 0.45); refl.renderOrder = 1; refl.material.depthTest = false;
+      board.add(refl, photo);
+    });
     return car;
   }
   cloneModel(i) {
@@ -157,10 +198,10 @@ export class Showroom {
 
     // Autos.
     this.cars = this.units.map((u, i) => {
-      const car = buildCar(u);
+      const car = u.photo_cutout ? this.buildPhotoCar(u) : buildCar(u);
       car.position.set((i - (n - 1) / 2) * SP, 0, 0);
       car.userData.index = i; car.userData.baseZ = 0;
-      car.add(this.contactShadow(car.userData.length, car.userData.width));
+      if (!car.userData.photo) car.add(this.contactShadow(car.userData.length, car.userData.width));
       g.add(car); return car;
     });
 
@@ -260,8 +301,10 @@ export class Showroom {
   loadViewerCar(i) {
     this.viewerSlot.clear();
     if (this.models?.[i]) this.viewerCar = this.cloneModel(i);
+    else if (this.units[i].photo_cutout) { this.viewerCar = this.buildPhotoCar(this.units[i]); }
     else { this.viewerCar = buildCar(this.units[i]); this.viewerCar.add(this.contactShadow(this.viewerCar.userData.length, this.viewerCar.userData.width)); }
     this.viewerSlot.add(this.viewerCar);
+    this.controls.enableRotate = !this.viewerCar.userData.photo;
   }
   open(i = this.focus) {
     if (this.mode !== 'garage') return;
@@ -330,9 +373,12 @@ export class Showroom {
       const f = this.cars[this.focus]; this.spot.target.position.set(f.position.x, 0.8, 0);
       this.spot.position.x += (f.position.x - this.spot.position.x) * 0.1;
     } else {
-      this.controls.autoRotate = !this.reduce && now - this.lastInteract > 4000;
+      this.controls.autoRotate = this.controls.enableRotate && !this.reduce && now - this.lastInteract > 4000;
       this.controls.update();
     }
+    // Fotos: siempre de frente a la cámara (solo giran sobre el eje vertical).
+    const cp = this.camera.position, wp = new THREE.Vector3();
+    for (const c of [...this.cars, this.viewerCar]) if (c?.userData.photo) { c.getWorldPosition(wp); c.userData.board.rotation.y = Math.atan2(cp.x - wp.x, cp.z - wp.z); }
     this.renderer.render(this.scene, this.camera);
 
     // Plan B: menos de 30 fps sostenidos.

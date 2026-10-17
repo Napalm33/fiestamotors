@@ -30,7 +30,13 @@
     "model3d_paint": "#8f1119",
     "model3d_illustrative": true,
     "photos": [],
-    "hotspots": []
+    "hotspots": [],
+    "model3d_seats": {
+      "color": "#151617",
+      "front_z": 0.35,
+      "rear_z": -0.55,
+      "y": 0
+    }
   },
   {
     "id": "389D3B",
@@ -58,10 +64,12 @@
       "hwy": 7.84
     },
     "detail_url": "",
-    "model3d": "models/honda-hrv-2025.glb",
+    "model3d": "",
     "model3d_illustrative": true,
     "photos": [],
-    "hotspots": []
+    "hotspots": [],
+    "model3d_style": "photo",
+    "photo_cutout": "photos/cutouts/honda-hrv.webp"
   },
   {
     "id": "4F787D",
@@ -89,10 +97,12 @@
       "hwy": 7.13
     },
     "detail_url": "",
-    "model3d": "models/subaru-crosstrek-2024.glb",
+    "model3d": "",
     "model3d_illustrative": true,
     "photos": [],
-    "hotspots": []
+    "hotspots": [],
+    "model3d_style": "photo",
+    "photo_cutout": "photos/cutouts/subaru-crosstrek.webp"
   },
   {
     "id": "42F304",
@@ -160,6 +170,9 @@
     "model3d": "models/chevrolet-silverado-2022.glb",
     "model3d_illustrative": true,
     "photos": [],
-    "hotspots": []
+    "hotspots": [],
+    "model3d_paint": "#ecece8",
+    "model3d_rot_y": 0,
+    "model3d_paint_flat": true
   }
 ]
