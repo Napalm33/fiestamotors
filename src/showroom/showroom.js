@@ -98,6 +98,10 @@ export class Showroom {
       m.envMapIntensity = 1.1;
       // Cristales: la "transmisión" dibuja la escena dos veces (pesado en celular); se cambia por vidrio transparente simple.
       if (m.transmission > 0) { m.transmission = 0; m.transparent = true; m.opacity = Math.max(m.opacity, 0.32); m.depthWrite = false; m.color.set('#05070a'); }
+      // Cristales y micas de faros por nombre de material: transparentes para ver el interior y las ópticas.
+      const nm = m.name || '';
+      if (/glass/i.test(nm) && /light|lamp|head|brake|tail|signal/i.test(nm)) { m.transparent = true; m.opacity = 0.38; m.depthWrite = false; m.roughness = 0.05; m.metalness = 0; m.envMapIntensity = 1.4; if (m.color.getHex() === 0xffffff) m.color.set('#e4e8ee'); }
+      else if (/(glass|window|windshield|cristal)s?$/i.test(nm)) { m.transparent = true; m.opacity = Math.min(m.opacity, 0.3); m.depthWrite = false; m.roughness = 0.04; m.metalness = 0; m.envMapIntensity = 1.4; m.color.set('#05070a'); }
       // Recolorea la pintura de la carrocería (material "CarPaint") al color de la unidad.
       if (u.model3d_paint && m.name === 'CarPaint') m.color.set(u.model3d_paint);
       // Rines: se oscurecen para igualar los de la unidad (el modelo trae rines plateados).
