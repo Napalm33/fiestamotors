@@ -61,7 +61,10 @@ export class Showroom {
     this.models = {};
     this.units.forEach((u, i) => {
       if (!u.model3d) return;
-      loader.loadAsync(new URL(u.model3d, document.baseURI).href).then((gltf) => {
+      let url = new URL(u.model3d, document.baseURI).href;
+      const emb = window.__EMBEDDED_MODELS?.[u.model3d]; // vista previa en Artifacts: el GLB viene incrustado
+      if (emb) url = URL.createObjectURL(new Blob([Uint8Array.from(atob(emb), (c) => c.charCodeAt(0))], { type: 'model/gltf-binary' }));
+      loader.loadAsync(url).then((gltf) => {
         this.models[i] = this.fitModel(gltf.scene, u);
         // Reemplaza el auto esquemático del garaje por el modelo real.
         const old = this.cars[i]; if (!old) return;
