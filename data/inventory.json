@@ -122,7 +122,9 @@
     "model3d_illustrative": true,
     "photos": [],
     "hotspots": [],
-    "carfax_badge": true
+    "carfax_badge": true,
+    "model3d_rot_y": 180,
+    "model3d_source": "ai-generated from 3 photos of the unit (Tripo H3.1 multiview)"
   },
   {
     "id": "775670",

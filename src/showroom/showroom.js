@@ -2,7 +2,9 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 import gsap from 'gsap';
-import { buildCar } from './cars.js';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
+import { buildCar, bodyKind, SIZES } from './cars.js';
 
 const SP = 3.4; // separación entre bahías (m)
 const FOV = 32;
@@ -49,6 +51,51 @@ export class Showroom {
     new ResizeObserver(() => this.resize()).observe(canvas.parentElement);
     this.resize();
     this.applyGarageCamera(true);
+    this.loadModels();
+  }
+
+  /* ---------- Modelos GLB (si existen; si no, se usa el auto esquemático) ---------- */
+  loadModels() {
+    const draco = new DRACOLoader().setDecoderPath(new URL('./draco/', document.baseURI).href);
+    const loader = new GLTFLoader().setDRACOLoader(draco);
+    this.models = {};
+    this.units.forEach((u, i) => {
+      if (!u.model3d) return;
+      loader.loadAsync(new URL(u.model3d, document.baseURI).href).then((gltf) => {
+        this.models[i] = this.fitModel(gltf.scene, u);
+        // Reemplaza el auto esquemático del garaje por el modelo real.
+        const old = this.cars[i]; if (!old) return;
+        const car = this.cloneModel(i); car.position.copy(old.position); car.userData.index = i;
+        this.garage.remove(old); this.garage.add(car); this.cars[i] = car;
+        if (this.mode === 'viewer' && this.focus === i) { this.loadViewerCar(i); }
+        this.hooks.onModelLoaded?.(i);
+      }).catch((e) => console.warn('Modelo 3D no disponible, se usa el esquemático:', u.model3d, e?.message || e));
+    });
+  }
+  fitModel(root, u) {
+    // Normaliza: largo real del auto, centrado, apoyado en el piso, de frente hacia +Z.
+    const L = SIZES[bodyKind(u)].L, car = new THREE.Group(), pivot = new THREE.Group();
+    pivot.add(root); car.add(pivot);
+    pivot.rotation.y = THREE.MathUtils.degToRad(u.model3d_rot_y || 0);
+    const box = new THREE.Box3().setFromObject(pivot), size = box.getSize(new THREE.Vector3()), c = box.getCenter(new THREE.Vector3());
+    const k = L / Math.max(size.x, size.z);
+    pivot.scale.setScalar(k); pivot.position.set(-c.x * k, -box.min.y * k, -c.z * k);
+    root.traverse((o) => {
+      if (!o.isMesh) return;
+      const m = o.material; if (!m) return;
+      m.envMapIntensity = 1.1;
+      // Los modelos generados con IA traen relieve ruidoso: se suaviza la pintura.
+      if (u.model3d_smooth !== false) { m.normalMap = null; m.roughness = Math.min(1, Math.max(m.roughness ?? 0.5, 0.38)); }
+      m.needsUpdate = true;
+    });
+    car.userData = { kind: bodyKind(u), length: size.z * k, width: size.x * k, glb: true };
+    return car;
+  }
+  cloneModel(i) {
+    const base = this.models[i], car = base.clone(true);
+    car.userData = { ...base.userData };
+    car.add(this.contactShadow(car.userData.length, car.userData.width));
+    return car;
   }
 
   /* ---------- Garaje ---------- */
@@ -190,8 +237,8 @@ export class Showroom {
   }
   loadViewerCar(i) {
     this.viewerSlot.clear();
-    this.viewerCar = buildCar(this.units[i]);
-    this.viewerCar.add(this.contactShadow(this.viewerCar.userData.length, this.viewerCar.userData.width));
+    if (this.models?.[i]) this.viewerCar = this.cloneModel(i);
+    else { this.viewerCar = buildCar(this.units[i]); this.viewerCar.add(this.contactShadow(this.viewerCar.userData.length, this.viewerCar.userData.width)); }
     this.viewerSlot.add(this.viewerCar);
   }
   open(i = this.focus) {

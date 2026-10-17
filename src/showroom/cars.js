@@ -23,6 +23,8 @@ const PROFILES = {
   },
 };
 
+export const SIZES = Object.fromEntries(Object.entries(PROFILES).map(([k, v]) => [k, { L: v.L, W: v.W }]));
+
 export const bodyKind = (unit) => {
   const b = (unit.body || '').toLowerCase();
   if (b.includes('pickup') || b.includes('truck')) return 'truck';
