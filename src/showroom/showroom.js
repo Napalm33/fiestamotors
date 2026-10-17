@@ -5,6 +5,8 @@ import gsap from 'gsap';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 import { buildCar, bodyKind, SIZES } from './cars.js';
+import { buildLoftCar } from './loft.js';
+import { SPECS } from './specs.js';
 
 const SP = 3.4; // separación entre bahías (m)
 const FOV = 32;
@@ -60,6 +62,13 @@ export class Showroom {
     const loader = new GLTFLoader().setDRACOLoader(draco);
     this.models = {};
     this.units.forEach((u, i) => {
+      if (u.model3d_style === 'loft' && SPECS[u.model3d_spec]) {   // modelado por código (sin archivo)
+        const car = buildLoftCar(SPECS[u.model3d_spec], new THREE.Color(u.model3d_paint || '#555'));
+        this.models[i] = car;
+        const old = this.cars[i];
+        if (old) { const c = this.cloneModel(i); c.position.copy(old.position); c.userData.index = i; this.garage.remove(old); this.garage.add(c); this.cars[i] = c; }
+        return;
+      }
       if (!u.model3d) return;
       let url = new URL(u.model3d, document.baseURI).href;
       const emb = window.__EMBEDDED_MODELS?.[u.model3d]; // vista previa en Artifacts: el GLB viene incrustado

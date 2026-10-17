@@ -124,7 +124,10 @@
     "hotspots": [],
     "carfax_badge": true,
     "model3d_rot_y": 180,
-    "model3d_source": "ai-generated from 3 photos of the unit (Tripo H3.1 multiview)"
+    "model3d_source": "modelado por código a partir de las fotos de la unidad (contorno lateral real)",
+    "model3d_style": "loft",
+    "model3d_spec": "golf-gti",
+    "model3d_paint": "#3b4555"
   },
   {
     "id": "775670",
