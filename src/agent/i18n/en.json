@@ -1,0 +1,72 @@
+{
+  "common": { "consult": "Ask us", "close": "Close" },
+  "pages": {
+    "test_drive": "Book a test drive",
+    "trade_in": "Trade-in appraisal",
+    "servicio": "Service appointment",
+    "contacto": "Contact us",
+    "calculadora": "Payment calculator",
+    "solicitud_credito": "Credit application"
+  },
+  "sitePanel": { "openTab": "Open in new tab", "loading": "Loading…", "noEmbed": "This page of the original site opens in a new tab.", "go": "Open: {page}" },
+  "agent": {
+    "open": "Open assistant",
+    "close": "Close assistant",
+    "title": "Fiesta Motors assistant",
+    "subtitle": "Virtual assistant powered by artificial intelligence",
+    "demoBadge": "Demo mode",
+    "greeting": "Hi, I'm Fiesta Motors' virtual assistant, an AI. How can I help?",
+    "greetingUnit": "Hi, I'm Fiesta Motors' virtual assistant, an AI. I see you're looking at the {unit}. Anything you'd like to know about it?",
+    "inputLabel": "Type your message",
+    "inputPlaceholder": "Type your message…",
+    "send": "Send",
+    "thinking": "Checking",
+    "connecting": "Connecting…",
+    "call": "Call",
+    "callUnavailable": "Voice turns on once the ElevenLabs agent is configured",
+    "hangup": "Hang up",
+    "mute": "Mute microphone",
+    "unmute": "Unmute microphone",
+    "listening": "Listening…",
+    "speaking": "Speaking…",
+    "voiceEnded": "Call ended. You can keep going by text.",
+    "micDenied": "I couldn't use the microphone. Check the browser permission or type your message.",
+    "error": "I couldn't reach the assistant. Try again or talk to an advisor at 416-855-6663.",
+    "disconnected": "The conversation closed. Type to continue.",
+    "quick": {
+      "testDrive": "Book a test drive",
+      "payment": "Calculate payment",
+      "advisor": "Talk to an advisor",
+      "whatsapp": "Continue on WhatsApp"
+    },
+    "userMsg": {
+      "testDrive": "I'd like to book a test drive",
+      "payment": "I'd like to calculate a payment",
+      "advisor": "I'd like to talk to an advisor"
+    },
+    "whatsappMissing": "The WhatsApp number isn't configured in this demo yet.",
+    "whatsappMsgUnit": "Hi, I'm interested in the {unit} (stock {stock}).",
+    "whatsappMsgGeneric": "Hi, I'd like information about your vehicles.",
+    "demo": {
+      "fallback": "An advisor will confirm that. Want me to connect you with one, or shall we go on with another question?",
+      "noUnit": "No vehicle is selected yet. Pick one in the showroom and I'll tell you what I have on it.",
+      "empty": "{field} for that vehicle is confirmed by an advisor.",
+      "price": "The {unit} has a listed price of {value}, plus HST and licensing. An advisor confirms the final price.",
+      "km": "The {unit} has {value}.",
+      "owners": "The {unit} has had {value} previous owner(s).",
+      "condition": "About the condition of the {unit}: {value}",
+      "fields": { "price": "The price", "km": "The mileage", "owners": "The number of owners", "condition": "The condition" },
+      "stock": "These are the vehicles in the showroom: {list}. If any detail is missing, an advisor will confirm it.",
+      "testDrive": "I'm opening the form to book your test drive. An advisor will confirm it with you.",
+      "payment": "I'm opening Fiesta Motors' payment calculator. Every payment is an estimate: the final payment depends on credit approval.",
+      "credit": "Fiesta Motors works with all kinds of credit, but approval and rate are set by the lender based on your profile. Would you like to open the application or talk to an advisor?",
+      "service": "I'm opening the service appointment form. A representative will confirm the date and time with you.",
+      "tradeIn": "I'm opening the trade-in appraisal.",
+      "contact": "I'm opening the contact page. You can also call 416-855-6663.",
+      "hours": "We're at 7515 Martin Grove Rd, Woodbridge, ON L4L 9E4. Hours: Monday to Friday 9:00 to 20:00, Saturday 9:00 to 18:00, Sunday by appointment only. Phone: 416-855-6663.",
+      "advisor": "I'll connect you with an advisor on WhatsApp so a person can help you.",
+      "whatsapp": "I'm opening WhatsApp with a message that includes the vehicle you're viewing.",
+      "hello": "Hi! How can I help?"
+    }
+  }
+}
