@@ -1,0 +1,12 @@
+# Vista previa privada. No desplegar sin aprobación de Alan.
+[build]
+  command = "npm run build"
+  publish = "dist"
+  # Omite TODOS los builds mientras se desarrolla (ahorra créditos de Netlify).
+  # Quitar esta línea solo cuando Alan apruebe la vista previa final (Fase 8).
+  ignore = "exit 0"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
