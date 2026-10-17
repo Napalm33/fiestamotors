@@ -103,3 +103,9 @@
   .fm-agent__panel, .fm-site-panel { animation: none; }
   .fm-msg--thinking span { animation: none; opacity: 0.7; }
 }
+
+.fm-site-panel__frame[hidden] { display: none; }
+.fm-site-panel__note { position: absolute; inset: 0; display: grid; align-content: center; justify-items: center; gap: 20px; padding: 24px; text-align: center; background: var(--bg); color: var(--text); }
+.fm-site-panel__note[hidden] { display: none; }
+.fm-site-panel__note p { margin: 0; max-width: 36ch; color: var(--muted); }
+.fm-site-panel__go { background: var(--red); color: #fff; text-decoration: none; font-weight: 700; padding: 14px 24px; border-radius: 4px; }

@@ -8,7 +8,7 @@
     "calculadora": "Payment calculator",
     "solicitud_credito": "Credit application"
   },
-  "sitePanel": { "openTab": "Open in new tab", "loading": "Loading…" },
+  "sitePanel": { "openTab": "Open in new tab", "loading": "Loading…", "noEmbed": "This page of the original site opens in a new tab.", "go": "Open: {page}" },
   "agent": {
     "open": "Open assistant",
     "close": "Close assistant",

@@ -8,7 +8,7 @@
     "calculadora": "Calculadora de pagos",
     "solicitud_credito": "Solicitud de crédito"
   },
-  "sitePanel": { "openTab": "Abrir en pestaña nueva", "loading": "Cargando…" },
+  "sitePanel": { "openTab": "Abrir en pestaña nueva", "loading": "Cargando…", "noEmbed": "Esta página del sitio original se abre en una pestaña nueva.", "go": "Abrir: {page}" },
   "agent": {
     "open": "Abrir asistente",
     "close": "Cerrar asistente",
