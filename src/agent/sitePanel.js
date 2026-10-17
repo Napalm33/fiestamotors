@@ -1,5 +1,5 @@
-import { state, setState } from '../state.js';
-import { t } from '../i18n/index.js';
+import { state, setState } from './core/state.js';
+import { t } from './core/i18n.js';
 import { SITE_PAGES } from './sitePages.js';
 
 let root;

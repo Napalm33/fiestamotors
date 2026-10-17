@@ -1,7 +1,7 @@
-import { state } from '../state.js';
-import { t } from '../i18n/index.js';
-import { getUnit } from '../inventory.js';
-import { unitName } from '../format.js';
+import { state } from './core/state.js';
+import { t } from './core/i18n.js';
+import { getUnit } from './core/inventory.js';
+import { unitName } from './core/format.js';
 
 const NUMBER = (import.meta.env.VITE_WHATSAPP_NUMBER || '').replace(/\D/g, '');
 

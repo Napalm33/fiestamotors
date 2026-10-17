@@ -1,5 +1,5 @@
-import { state } from '../state.js';
-import { getUnit } from '../inventory.js';
+import { state } from './core/state.js';
+import { getUnit } from './core/inventory.js';
 
 // Contexto que recibe el agente: idioma, canal, unidad (todos sus campos), sección y panel abierto.
 export function buildContext(channel) {

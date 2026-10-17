@@ -38,9 +38,10 @@ Verificadas el 2026-10-17 con `curl -I`: las cinco responden 200 **sin** `X-Fram
 - Calculadora: `https://woodbridge.fiestamotors.ca/payment-calculator/` (URL de la spec).
 - Solicitud de crédito: `https://fiestamotors.zopsoftware.com/api/templates/render/5`. Es un sitio de terceros (ZopDealer): confirmar con Alan que lo quiere incrustado.
 
-## Estado del repo
+## Integración con el sitio
 
-Las fases 1 a 4 aún no existen. Para poder probar el agente se agregó:
-- `data/inventory.json` provisional con **solo** las dos unidades confirmadas (2025 Honda HR-V Sport, stock 389D3B; 2024 Volkswagen Golf GTI 380 Performance) y el resto en `null`/`""`. La extracción de las 5 unidades con Playwright es la fase 1.
-- `src/dev-host.js`: anfitrión provisional (selector de unidad, EN/ES y secciones) que reemplazará el showroom.
-- Colores y tipografía provisionales en `src/styles/base.css`; se fijan con el logo y el par tipográfico que apruebe Alan.
+El agente se monta sobre el sitio de la rama `claude/upbeat-brown-hcegt3` (inventario real de 5 unidades, hero y showroom 3D). Puntos de contacto en `src/main.js`:
+- `initAgent()` al final; devuelve `{ open, close }`.
+- Idioma, unidad enfocada y sección visible se pasan al agente con `setAgentState` (`src/agent/core/state.js`).
+- En la ficha, "Agendar test drive" y "Calcular pago" abren la página del sitio original dentro del sitio (sin JS siguen siendo enlaces), y "Preguntar al asistente" abre el panel.
+- El agente tiene sus propios textos en `src/agent/i18n/` y no toca los del sitio.

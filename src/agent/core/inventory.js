@@ -1,4 +1,4 @@
-import inventory from '../data/inventory.json';
+import inventory from '../../../data/inventory.json';
 
 export const units = inventory;
 

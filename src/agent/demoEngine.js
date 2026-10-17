@@ -1,6 +1,6 @@
-import { t } from '../i18n/index.js';
-import { units } from '../inventory.js';
-import { unitName, fmtPrice, fmtKm } from '../format.js';
+import { t } from './core/i18n.js';
+import { units } from './core/inventory.js';
+import { unitName, fmtPrice, fmtKm } from './core/format.js';
 
 // Respuestas del modo demostración: solo salen de data/inventory.json y de los datos del negocio.
 // No calcula pagos, no promete aprobaciones, no inventa campos vacíos.

@@ -1,7 +1,7 @@
-import { state, subscribe } from '../state.js';
-import { t } from '../i18n/index.js';
-import { getUnit } from '../inventory.js';
-import { unitName } from '../format.js';
+import { state, subscribe } from './core/state.js';
+import { t } from './core/i18n.js';
+import { getUnit } from './core/inventory.js';
+import { unitName } from './core/format.js';
 import { buildContext } from './context.js';
 import { createConnection } from './connection.js';
 import { openSitePage } from './sitePanel.js';
@@ -213,7 +213,8 @@ export function initAgent() {
     fab.setAttribute('aria-label', t('agent.close'));
     if (!greeted) {
       greeted = true;
-      const unit = getUnit(state.unitId);
+      // Solo se nombra la unidad si el cliente está en el showroom o en la franja de unidades.
+      const unit = ['showroom', 'units'].includes(state.section) ? getUnit(state.unitId) : null;
       addMessage('agent', unit ? t('agent.greetingUnit', { unit: unitName(unit) }) : t('agent.greeting'));
       ensureConnected().catch(() => addMessage('system', t('agent.error')));
     }
@@ -259,4 +260,5 @@ export function initAgent() {
   });
 
   renderStatic();
+  return { open: openPanel, close: closePanel };
 }

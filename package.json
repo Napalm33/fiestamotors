@@ -23,6 +23,7 @@
     "vite": "^5.4.21"
   },
   "dependencies": {
+    "@elevenlabs/client": "^1.28.0",
     "gsap": "^3.12.5",
     "lenis": "^1.0.45",
     "three": "^0.186.1"
