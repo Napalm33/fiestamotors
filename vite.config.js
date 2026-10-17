@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  server: { host: true },
+  base: './',
   build: { target: 'es2020' },
 });
