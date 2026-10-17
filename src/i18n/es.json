@@ -1,0 +1,70 @@
+{
+  "common": { "consult": "Consultar", "close": "Cerrar" },
+  "pages": {
+    "test_drive": "Agendar test drive",
+    "trade_in": "Valuación de tu auto",
+    "contacto": "Contacto",
+    "calculadora": "Calculadora de pagos",
+    "solicitud_credito": "Solicitud de crédito"
+  },
+  "sitePanel": { "openTab": "Abrir en pestaña nueva", "loading": "Cargando…" },
+  "agent": {
+    "open": "Abrir asistente",
+    "close": "Cerrar asistente",
+    "title": "Asistente Fiesta Motors",
+    "subtitle": "Asistente virtual con inteligencia artificial",
+    "demoBadge": "Modo demostración",
+    "greeting": "Hola, soy el asistente virtual de Fiesta Motors, una inteligencia artificial. ¿En qué te ayudo?",
+    "greetingUnit": "Hola, soy el asistente virtual de Fiesta Motors, una inteligencia artificial. Veo que estás viendo el {unit}. ¿Quieres saber algo de él?",
+    "inputLabel": "Escribe tu mensaje",
+    "inputPlaceholder": "Escribe tu mensaje…",
+    "send": "Enviar",
+    "thinking": "Consultando",
+    "connecting": "Conectando…",
+    "call": "Llamar",
+    "callUnavailable": "La voz se activa al configurar el agente de ElevenLabs",
+    "hangup": "Colgar",
+    "mute": "Silenciar micrófono",
+    "unmute": "Activar micrófono",
+    "listening": "Te escucho…",
+    "speaking": "Hablando…",
+    "voiceEnded": "Llamada terminada. Puedes seguir por texto.",
+    "micDenied": "No pude usar el micrófono. Revisa el permiso del navegador o escribe tu mensaje.",
+    "error": "No pude conectarme con el asistente. Intenta de nuevo o habla con un asesor al 416-855-6663.",
+    "disconnected": "La conversación se cerró. Escribe para continuar.",
+    "quick": {
+      "testDrive": "Agendar test drive",
+      "payment": "Calcular pago",
+      "advisor": "Hablar con un asesor",
+      "whatsapp": "Continuar por WhatsApp"
+    },
+    "userMsg": {
+      "testDrive": "Quiero agendar un test drive",
+      "payment": "Quiero calcular un pago",
+      "advisor": "Quiero hablar con un asesor"
+    },
+    "whatsappMissing": "El número de WhatsApp aún no está configurado en esta demostración.",
+    "whatsappMsgUnit": "Hola, me interesa el {unit} (stock {stock}).",
+    "whatsappMsgGeneric": "Hola, quiero información sobre sus autos.",
+    "demo": {
+      "fallback": "Eso lo confirma un asesor. ¿Quieres que te pase con uno o seguimos con otra duda?",
+      "noUnit": "Aún no hay un auto seleccionado. Elige uno en el showroom y te cuento lo que tengo de él.",
+      "empty": "{field} de ese auto lo confirma un asesor.",
+      "price": "El {unit} tiene un precio de {value}.",
+      "km": "El {unit} tiene {value}.",
+      "owners": "El {unit} tiene {value} dueño(s) anteriores.",
+      "condition": "Sobre la condición del {unit}: {value}",
+      "fields": { "price": "El precio", "km": "El kilometraje", "owners": "El número de dueños", "condition": "La condición" },
+      "stock": "Tengo estas unidades en el showroom: {list}. Si algún dato falta, lo confirma un asesor.",
+      "testDrive": "Abro el formulario para agendar tu test drive. Un asesor lo confirma contigo.",
+      "payment": "Abro la calculadora de pagos de Fiesta Motors. Todo pago es un estimado: el pago final depende de la aprobación de crédito.",
+      "credit": "Fiesta Motors trabaja con todo tipo de crédito, pero la aprobación y la tasa las define la financiera según tu perfil. ¿Quieres abrir la solicitud o prefieres hablar con un asesor?",
+      "tradeIn": "Abro la valuación de tu auto para dar a cambio.",
+      "contact": "Abro la página de contacto. También puedes llamar al 416-855-6663.",
+      "hours": "Estamos en 7515 Martin Grove Rd, Woodbridge, ON L4L 9E4. Horario: lunes a viernes de 9:00 a 20:00, sábado de 9:00 a 18:00, domingo solo con cita. Teléfono: 416-855-6663.",
+      "advisor": "Te paso con un asesor por WhatsApp para que te atienda una persona.",
+      "whatsapp": "Abro WhatsApp con un mensaje que incluye el auto que estás viendo.",
+      "hello": "¡Hola! ¿En qué te ayudo?"
+    }
+  }
+}
