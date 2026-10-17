@@ -109,6 +109,7 @@ function initShowroom() {
       },
     });
   } catch (err) { console.warn('WebGL no disponible, usando plan B', err); return enableFallback(); }
+  if (force3d) window.__sr = sr; // solo para pruebas (?force3d)
   refreshShowroomUI();
 
   $('#sr-prev').addEventListener('click', () => sr.prev());

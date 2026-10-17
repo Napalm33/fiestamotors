@@ -96,6 +96,12 @@ export class Showroom {
       if (!o.isMesh) return;
       const m = o.material; if (!m) return;
       m.envMapIntensity = 1.1;
+      // Cristales: la "transmisión" dibuja la escena dos veces (pesado en celular); se cambia por vidrio transparente simple.
+      if (m.transmission > 0) { m.transmission = 0; m.transparent = true; m.opacity = Math.max(m.opacity, 0.32); m.depthWrite = false; m.color.set('#05070a'); }
+      // Recolorea la pintura de la carrocería (material "CarPaint") al color de la unidad.
+      if (u.model3d_paint && m.name === 'CarPaint') m.color.set(u.model3d_paint);
+      // Rines: se oscurecen para igualar los de la unidad (el modelo trae rines plateados).
+      if (u.model3d_rims && /Rim_/.test(`${o.name} ${o.parent?.name || ''}`)) { o.material = m.clone(); o.material.color.set(u.model3d_rims); }
       // Los modelos generados con IA traen relieve ruidoso: se suaviza la pintura.
       if (u.model3d_smooth !== false) { m.normalMap = null; m.roughness = Math.min(1, Math.max(m.roughness ?? 0.5, 0.38)); }
       m.needsUpdate = true;

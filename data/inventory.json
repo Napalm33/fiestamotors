@@ -123,11 +123,11 @@
     "photos": [],
     "hotspots": [],
     "carfax_badge": true,
-    "model3d_rot_y": 180,
-    "model3d_source": "modelado por código a partir de las fotos de la unidad (contorno lateral real)",
-    "model3d_style": "loft",
-    "model3d_spec": "golf-gti",
-    "model3d_paint": "#3b4555"
+    "model3d_rot_y": 0,
+    "model3d_source": "Sketchfab \"2024 Volkswagen Golf GTI\" de Ddiaz Design (CC BY-NC-SA 4.0: NO permite uso comercial; requiere permiso del autor o licencia de pago). Pintura y rines recoloreados por código.",
+    "model3d_paint": "#515a66",
+    "model3d_smooth": false,
+    "model3d_rims": "#17181b"
   },
   {
     "id": "775670",
