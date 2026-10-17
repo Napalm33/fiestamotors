@@ -138,10 +138,20 @@ function initShowroom() {
 $('#lang').addEventListener('click', () => { lang = lang === 'es' ? 'en' : 'es'; applyStatic(); refreshShowroomUI(); if (!$('#units').hidden) { renderStrip(); renderDetail(); } });
 $('#detail').addEventListener('click', (e) => { if (e.target.closest('[aria-disabled="true"]')) e.preventDefault(); });
 
-/* ---------- Video de fondo ---------- */
+/* ---------- Video de fondo (9:16 en vertical, 16:9 en horizontal) ---------- */
 const video = $('#hero-video'), play = $('#hero-play');
+const heroSrc = () => (matchMedia('(orientation: portrait)').matches ? 'video/hero-9x16.mp4' : 'video/hero-16x9.mp4');
+let heroCurrent = '';
+function loadHero() {
+  const src = heroSrc(); if (src === heroCurrent) return;
+  heroCurrent = src; video.src = new URL(src, document.baseURI).href; video.load();
+  if (!reduce) video.play().catch(showPlay);
+}
 const showPlay = () => { play.hidden = false; play.addEventListener('click', () => { video.play(); play.hidden = true; }, { once: true }); };
-if (reduce) showPlay(); else video.play().catch(showPlay);
+video.addEventListener('error', () => { video.hidden = true; }); // si el video falla, queda el póster
+matchMedia('(orientation: portrait)').addEventListener('change', loadHero);
+loadHero();
+if (reduce) { video.pause(); showPlay(); } // con "reducir movimiento" no se reproduce solo
 
 const bar = $('.bar');
 addEventListener('scroll', () => bar.classList.toggle('solid', scrollY > 40), { passive: true });
