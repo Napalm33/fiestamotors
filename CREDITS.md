@@ -10,3 +10,6 @@ Assets con licencia usados en el proyecto. Cada entrada: nombre, autor, licencia
 ## Código de terceros
 - three.js (MIT), incluye los decodificadores Draco de `public/draco/` (Apache-2.0, Google).
 - GSAP 3.12.5 (licencia estándar de GSAP), Lenis (MIT).
+
+## Nissan Rogue 2022 (modelo de prueba)
+- Origen: archivo compartido por Alan en Drive (`3D_models/2022_nissan_rogue.glb`). Licencia **pendiente de confirmar** (falta el enlace de Sketchfab). Mientras tanto el `.glb` está en `.gitignore` y no se publica. Materiales reasignados por nombre (el archivo venía sin colores) y pintura recoloreada a rojo; geometría simplificada.

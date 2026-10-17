@@ -26,6 +26,8 @@
     },
     "detail_url": "",
     "model3d": "models/nissan-rogue-2026.glb",
+    "model3d_rot_y": 0,
+    "model3d_paint": "#8f1119",
     "model3d_illustrative": true,
     "photos": [],
     "hotspots": []
