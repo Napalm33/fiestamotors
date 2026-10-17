@@ -26,6 +26,9 @@ export function demoReply(input, ctx) {
   if (has(q, ['test drive', 'prueba de manejo', 'probar', 'manejar', 'cita', 'appointment'])) {
     return { text: t('agent.demo.testDrive'), actions: [{ type: 'open_panel', page: 'test_drive' }] };
   }
+  if (has(q, ['servicio', 'taller', 'mantenimiento', 'service', 'repair', 'maintenance'])) {
+    return { text: t('agent.demo.service'), actions: [{ type: 'open_panel', page: 'servicio' }] };
+  }
   if (has(q, ['trade', 'dar a cambio', 'mi auto', 'my car', 'my vehicle'])) {
     return { text: t('agent.demo.tradeIn'), actions: [{ type: 'open_panel', page: 'trade_in' }] };
   }

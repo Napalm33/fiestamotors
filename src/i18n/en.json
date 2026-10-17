@@ -3,6 +3,7 @@
   "pages": {
     "test_drive": "Book a test drive",
     "trade_in": "Trade-in appraisal",
+    "servicio": "Service appointment",
     "contacto": "Contact us",
     "calculadora": "Payment calculator",
     "solicitud_credito": "Credit application"
@@ -59,6 +60,7 @@
       "testDrive": "I'm opening the form to book your test drive. An advisor will confirm it with you.",
       "payment": "I'm opening Fiesta Motors' payment calculator. Every payment is an estimate: the final payment depends on credit approval.",
       "credit": "Fiesta Motors works with all kinds of credit, but approval and rate are set by the lender based on your profile. Would you like to open the application or talk to an advisor?",
+      "service": "I'm opening the service appointment form. A representative will confirm the date and time with you.",
       "tradeIn": "I'm opening the trade-in appraisal.",
       "contact": "I'm opening the contact page. You can also call 416-855-6663.",
       "hours": "We're at 7515 Martin Grove Rd, Woodbridge, ON L4L 9E4. Hours: Monday to Friday 9:00 to 20:00, Saturday 9:00 to 18:00, Sunday by appointment only. Phone: 416-855-6663.",

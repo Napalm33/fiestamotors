@@ -22,7 +22,7 @@ Contrato del backend de texto: `POST VITE_AGENT_API_URL` con `{ session_id, mess
 
 ## Herramientas de cliente (a registrar en el agente de ElevenLabs)
 
-- `abrir_pagina_sitio(pagina)`: `test_drive`, `trade_in`, `contacto`, `calculadora`, `solicitud_credito`. Abre el panel a pantalla completa.
+- `abrir_pagina_sitio(pagina)`: `test_drive`, `trade_in`, `servicio`, `contacto`, `calculadora`, `solicitud_credito`. Abre el panel a pantalla completa.
 - `abrir_whatsapp()`: abre `wa.me` con la unidad que ve el cliente.
 
 ## Pendientes de configuración (Alan)
