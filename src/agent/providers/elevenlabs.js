@@ -26,6 +26,11 @@ export class ElevenLabsProvider {
         this.h.onAction({ type: 'open_panel', page: pagina });
         return 'Página abierta en pantalla';
       },
+      // El agente decide cuándo la llamada agiliza el proceso; el widget muestra la invitación.
+      ofrecer_llamada: () => {
+        this.h.onAction({ type: 'offer_call' });
+        return 'Invitación a llamar mostrada al cliente';
+      },
       abrir_whatsapp: () => {
         this.h.onAction({ type: 'whatsapp' });
         return 'WhatsApp abierto';

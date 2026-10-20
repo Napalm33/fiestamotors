@@ -209,6 +209,11 @@
       "uDrive": "{v}",
       "uNone": "an advisor confirms the details",
       "unitCard": "Here's what I have on the {name}: {details}. Any missing detail is confirmed by an advisor."
-    }
+    },
+    "offerCall": "To move faster we can also talk by voice right here, without leaving this screen. Would you like to call?",
+    "offerCallYes": "Call now",
+    "offerCallNo": "Keep texting",
+    "offerCallNoMsg": "I'd rather keep texting",
+    "voiceGreeting": "Hi, I'm Fiesta Motors' virtual assistant, an AI. How can I help?"
   }
 }

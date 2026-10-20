@@ -72,12 +72,16 @@ export function initAgent() {
     if (choices.length) {
       const row = document.createElement('div');
       row.className = 'fm-choices';
-      choices.forEach((label) => {
+      choices.forEach((choice) => {
+        const { label, run } = typeof choice === 'string' ? { label: choice } : choice;
         const b = document.createElement('button');
         b.type = 'button';
         b.className = 'fm-chip';
         b.textContent = label;
-        b.addEventListener('click', () => sendUser(label));
+        b.addEventListener('click', () => {
+          row.remove();
+          if (run) run(); else sendUser(label);
+        });
         row.append(b);
       });
       log.append(row);
@@ -141,7 +145,15 @@ export function initAgent() {
   }
 
   function runAction(action) {
-    if (action.type === 'open_panel') openSitePage(action.page);
+    if (action.type === 'offer_call') {
+      // Solo se ofrece si la voz está disponible; sin ella no se promete.
+      if (conn.supportsVoice && !inVoice) {
+        addMessage('agent', t('agent.offerCall'), [
+          { label: t('agent.offerCallYes'), run: startVoice },
+          { label: t('agent.offerCallNo'), run: () => sendUser(t('agent.offerCallNoMsg')) },
+        ]);
+      }
+    } else if (action.type === 'open_panel') openSitePage(action.page);
     else if (action.type === 'whatsapp' && !openWhatsApp(action.text) && !whatsappConfigured) addMessage('system', t('agent.whatsappMissing'));
   }
 

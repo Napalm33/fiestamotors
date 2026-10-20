@@ -1,4 +1,5 @@
 import { state, curLang } from './core/state.js';
+import { t } from './core/i18n.js';
 import { getUnit } from './core/inventory.js';
 
 // Contexto que recibe el agente: idioma, canal, unidad (todos sus campos), sección y panel abierto.
@@ -23,6 +24,8 @@ export function dynamicVariables(ctx) {
     canal: ctx.canal,
     seccion: ctx.seccion,
     panel_sitio: ctx.panel_sitio || 'ninguno',
+    // Primer mensaje del agente en voz: el agente de ElevenLabs lo usa como {{primer_mensaje}}.
+    primer_mensaje: t('agent.voiceGreeting'),
     unidad: ctx.unidad ? JSON.stringify(ctx.unidad) : 'ninguna',
   };
 }

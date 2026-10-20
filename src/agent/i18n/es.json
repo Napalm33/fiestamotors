@@ -209,6 +209,11 @@
       "uDrive": "tracción {v}",
       "uNone": "los datos los confirma un asesor",
       "unitCard": "Esto tengo del {name}: {details}. Cualquier dato que falte lo confirma un asesor."
-    }
+    },
+    "offerCall": "Para avanzar más rápido también podemos hablar por voz aquí mismo, sin salir de esta pantalla. ¿Quieres llamar?",
+    "offerCallYes": "Llamar ahora",
+    "offerCallNo": "Seguir por texto",
+    "offerCallNoMsg": "Prefiero seguir por texto",
+    "voiceGreeting": "Hola, soy el asistente virtual de Fiesta Motors, una inteligencia artificial. ¿En qué te ayudo?"
   }
 }

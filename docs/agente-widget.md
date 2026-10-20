@@ -66,3 +66,8 @@ Si esa conversación republica desde su propio código, el agente insertado se p
 
 El agente detecta el idioma de lo que escribe el cliente (`src/agent/core/lang.js`, español o inglés) y conduce toda la conversación en ese idioma: respuestas, botones de respuesta rápida y textos del panel. No cambia el idioma del resto del sitio. Los mensajes sin evidencia (nombres, números, "ok") conservan el idioma anterior. Si el cliente toca el botón EN/ES del sitio, la conversación vuelve a seguir al sitio. El contexto que recibe el agente (`idioma`) refleja el idioma detectado.
 - Con ElevenLabs, el idioma lo resuelve el prompt (sección Identidad). En voz conviene activar la herramienta de detección de idioma del agente en ElevenLabs y habilitar español e inglés; no se fuerza desde el widget.
+
+## Texto primero, con llamada cuando conviene
+
+El panel abre en texto. El agente decide cuándo la voz agiliza el proceso y llama a la herramienta de cliente `ofrecer_llamada`: el widget muestra una invitación con "Llamar ahora" y "Seguir por texto" (solo si la voz está disponible; en modo demostración no se ofrece). Registrar `ofrecer_llamada` en el agente de ElevenLabs además de `abrir_pagina_sitio` y `abrir_whatsapp`. El saludo hablado sale de la variable dinámica `primer_mensaje` (en el idioma de la página).
+Configuración completa de ElevenLabs en `docs/elevenlabs/`.
