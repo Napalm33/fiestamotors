@@ -21,6 +21,23 @@ function boot() {
 
   const agent = initAgent();
 
+  // El botón del agente abre SIEMPRE el panel del agente. Algunas versiones del sitio le ponían encima un menú
+  // propio que atrapaba el clic (y dejaba sin abrir el panel al elegir una unidad). En captura sobre window
+  // llega antes que cualquier otro manejador; las aperturas programáticas del sitio (fab.click()) también pasan por aquí.
+  window.addEventListener('click', (e) => {
+    const fab = e.target.closest?.('.fm-agent__fab');
+    if (!fab) return;
+    e.preventDefault();
+    e.stopPropagation();
+    const panel = document.querySelector('#fm-agent-panel');
+    if (panel && panel.hidden) agent.open(); else agent.close();
+  }, true);
+  const style = document.createElement('style');
+  style.textContent = '#inv-dock{display:none!important}'; // menú propio del sitio: el agente trae su propio inicio
+  document.head.append(style);
+  // Un botón de llamada del sitio no debe prometer voz si el agente no la tiene activa (modo demostración).
+  if (document.querySelector('.fm-agent__call')?.disabled) style.textContent += '.inv-call{display:none!important}';
+
   // Los botones de la ficha abren la página dentro del sitio o el asistente. En captura, para que el
   // manejador de la instancia anterior (que sigue escuchando en document) no los procese también.
   window.addEventListener('click', (e) => {
