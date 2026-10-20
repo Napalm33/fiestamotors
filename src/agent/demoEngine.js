@@ -130,7 +130,12 @@ function handleToken(token, text) {
     flow.band = a === 'any' ? null : a;
     return recommend();
   }
+  if (kind === 'cmp') return askBody('');
   if (kind === 'path') {
+    if (a === 'ask') {
+      flow.stage = 'path';
+      return reply(line('askPath'), ch([['path:cash', line('c.cash')], ['path:credit', line('c.credit')], ['path:unsure', line('c.unsure')]]));
+    }
     if (a === 'cash') return cashPath();
     if (a === 'credit') return creditIntro();
     return reply(line('pathUnsure'), ch([['path:cash', line('c.cash')], ['path:credit', line('c.credit')]]));
@@ -206,6 +211,24 @@ const field = (ctx, key, value, label) => {
   return reply(t(`agent.demo.${key}`, { unit: unitName(unit), value }));
 };
 
+// Unidad nombrada en el mensaje (marca y modelo, o solo el modelo).
+function findUnit(q) {
+  return units.find((u) => q.includes(norm(`${u.make} ${u.model}`)) || q.includes(norm(u.model).split(' ')[0])) || null;
+}
+
+function unitCard(u) {
+  flow.focus = u;
+  flow.stage = 'path';
+  const bits = [
+    u.price != null ? line('uPrice', { price: fmtPrice(u) }) : null,
+    u.odometer_km != null ? fmtKm(u) : null,
+    u.drivetrain ? line('uDrive', { v: u.drivetrain }) : null,
+    u.color ? u.color : null,
+  ].filter(Boolean);
+  const details = bits.length ? bits.join(' · ') : line('uNone');
+  return reply(line('unitCard', { name: unitName(u), details }), ch([['act:testdrive', line('c.testDrive')], ['cmp:start', line('c.compare')], ['path:ask', line('c.howPay')]]));
+}
+
 export function demoReply(input, ctx) {
   const raw = input.trim();
   const q = norm(raw);
@@ -221,6 +244,11 @@ export function demoReply(input, ctx) {
 
   // 2) Texto libre según la etapa del embudo
   const staged = parseStage(q, raw);
+  const mentioned = findUnit(q);
+  if (mentioned) {
+    flow.focus = mentioned;
+    ctx = { ...ctx, unidad: mentioned };
+  }
   const interrupt = has(q, ['asesor', 'advisor', 'whatsapp', 'test drive', 'prueba de manejo']);
   if (staged && !(flow.stage === 'collect' && interrupt)) {
     if (staged === 'ans:free') return handleToken('ans:free', raw.slice(0, 80));
@@ -258,6 +286,7 @@ export function demoReply(input, ctx) {
   if (has(q, ['horario', 'hora', 'donde', 'direccion', 'address', 'hours', 'where', 'location', 'telefono', 'phone'])) {
     return { ...reply(t('agent.demo.hours')), actions: [{ type: 'open_panel', page: 'contacto' }] };
   }
+  if (mentioned) return unitCard(mentioned);
   if (has(q, ['inventario', 'disponible', 'tienen', 'autos', 'carros', 'inventory', 'available', 'cars', 'stock'])) {
     return reply(t('agent.demo.stock', { list: units.map(unitName).join(', ') }), needChoices());
   }

@@ -9,7 +9,8 @@
     "dev": "vite",
     "build": "vite build",
     "build:artifact": "vite build --mode artifact",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build:embed": "vite build --config vite.embed.config.js --mode artifact"
   },
   "repository": {
     "type": "git",

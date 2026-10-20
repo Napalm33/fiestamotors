@@ -52,3 +52,12 @@ El agente conduce la conversación: necesidad del cliente, tipo de auto y presup
 - Modo demostración: `src/agent/demoEngine.js` implementa el embudo con botones de respuesta rápida y solo con datos de `data/inventory.json`. Detecta un posible SIN o tarjeta y lo rechaza sin guardarlo.
 - Los mínimos de las financieras no están definidos: el agente no decide si el cliente "califica", solo reúne y pasa a un asesor.
 - Con ElevenLabs, el embudo lo conduce el prompt del agente; el widget solo muestra las cuatro preguntas de necesidad al abrir.
+
+## Cargar el agente en un Artifact cuyo código no está en este repo
+
+Para "Fiesta Motors Showroom video" (el código del showroom vive en otra conversación):
+1. `npm run build:embed` genera `dist-embed/` (un solo JS y su CSS, sin claves: modo demostración).
+2. `node scripts/inject-agent.mjs <html-publicado> <salida.html>` lo inserta al final del HTML, retira la instancia anterior del agente y se engancha a la página (idioma, unidad en `#inv-card`, secciones, botones `data-open-page` y `data-agent-open`). Es idempotente.
+3. Publicar `<salida.html>` sobre el mismo Artifact.
+
+Si esa conversación republica desde su propio código, el agente insertado se pierde. Para que no pase, o bien se fusiona esta rama y se usa `initAgent()` (ver `docs/prompt-montar-agente.md`), o se repite el paso 2 después de cada publicación.

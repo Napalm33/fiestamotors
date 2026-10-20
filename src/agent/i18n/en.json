@@ -201,8 +201,14 @@
         "testDrive": "Book a test drive",
         "calc": "Open calculator",
         "creditForm": "Open credit application",
-        "sendAdvisor": "Send summary to an advisor"
-      }
+        "sendAdvisor": "Send summary to an advisor",
+        "compare": "Compare it with other options",
+        "howPay": "How would I pay for it?"
+      },
+      "uPrice": "{price} plus HST and licensing",
+      "uDrive": "{v}",
+      "uNone": "an advisor confirms the details",
+      "unitCard": "Here's what I have on the {name}: {details}. Any missing detail is confirmed by an advisor."
     }
   }
 }

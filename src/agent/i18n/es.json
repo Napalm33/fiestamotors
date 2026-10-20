@@ -201,8 +201,14 @@
         "testDrive": "Agendar test drive",
         "calc": "Abrir calculadora",
         "creditForm": "Abrir solicitud de crédito",
-        "sendAdvisor": "Enviar resumen a un asesor"
-      }
+        "sendAdvisor": "Enviar resumen a un asesor",
+        "compare": "Compararlo con otras opciones",
+        "howPay": "¿Cómo lo pagaría?"
+      },
+      "uPrice": "{price} más HST y licencia",
+      "uDrive": "tracción {v}",
+      "uNone": "los datos los confirma un asesor",
+      "unitCard": "Esto tengo del {name}: {details}. Cualquier dato que falte lo confirma un asesor."
     }
   }
 }
