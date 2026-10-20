@@ -1,6 +1,6 @@
 import { demoReply } from '../demoEngine.js';
 
-// Sin claves: responde solo con datos de inventory.json.
+// Sin claves: embudo de ventas guiado que responde solo con datos de inventory.json.
 export class DemoProvider {
   kind = 'demo';
   supportsVoice = false;
@@ -27,9 +27,9 @@ export class DemoProvider {
     this.ctx = ctx;
     this.h.onThinking(true);
     await new Promise((r) => setTimeout(r, 450));
-    const { text: reply, actions = [] } = demoReply(text, this.ctx);
+    const { text: reply, actions = [], choices = [] } = demoReply(text, this.ctx);
     this.h.onThinking(false);
-    this.h.onMessage({ role: 'agent', text: reply });
+    this.h.onMessage({ role: 'agent', text: reply, choices });
     actions.forEach((a) => this.h.onAction(a));
   }
 

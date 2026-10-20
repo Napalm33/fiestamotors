@@ -45,3 +45,10 @@ El agente se monta sobre el sitio de la rama `claude/upbeat-brown-hcegt3` (inven
 - Idioma, unidad enfocada y sección visible se pasan al agente con `setAgentState` (`src/agent/core/state.js`).
 - En la ficha, "Agendar test drive" y "Calcular pago" abren la página del sitio original dentro del sitio (sin JS siguen siendo enlaces), y "Preguntar al asistente" abre el panel.
 - El agente tiene sus propios textos en `src/agent/i18n/` y no toca los del sitio.
+
+## Embudo de ventas (v0.4)
+
+El agente conduce la conversación: necesidad del cliente, tipo de auto y presupuesto, recomendación y comparativa, contado o financiamiento. Contado va directo a la compra; solo con financiamiento se pide permiso para la recolección de información (ID canadiense, historial, credit score en rango, ingreso, empleo, enganche, trade-in). Las reglas completas están en la sección 5b de `docs/agente-fiesta-motors-prompt.md`.
+- Modo demostración: `src/agent/demoEngine.js` implementa el embudo con botones de respuesta rápida y solo con datos de `data/inventory.json`. Detecta un posible SIN o tarjeta y lo rechaza sin guardarlo.
+- Los mínimos de las financieras no están definidos: el agente no decide si el cliente "califica", solo reúne y pasa a un asesor.
+- Con ElevenLabs, el embudo lo conduce el prompt del agente; el widget solo muestra las cuatro preguntas de necesidad al abrir.

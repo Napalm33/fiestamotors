@@ -1,5 +1,8 @@
 {
-  "common": { "consult": "Consultar", "close": "Cerrar" },
+  "common": {
+    "consult": "Consultar",
+    "close": "Cerrar"
+  },
   "pages": {
     "test_drive": "Agendar test drive",
     "trade_in": "Valuación de tu auto",
@@ -8,7 +11,12 @@
     "calculadora": "Calculadora de pagos",
     "solicitud_credito": "Solicitud de crédito"
   },
-  "sitePanel": { "openTab": "Abrir en pestaña nueva", "loading": "Cargando…", "noEmbed": "Esta página del sitio original se abre en una pestaña nueva.", "go": "Abrir: {page}" },
+  "sitePanel": {
+    "openTab": "Abrir en pestaña nueva",
+    "loading": "Cargando…",
+    "noEmbed": "Esta página del sitio original se abre en una pestaña nueva.",
+    "go": "Abrir: {page}"
+  },
   "agent": {
     "open": "Abrir asistente",
     "close": "Cerrar asistente",
@@ -55,7 +63,12 @@
       "km": "El {unit} tiene {value}.",
       "owners": "El {unit} tiene {value} dueño(s) anteriores.",
       "condition": "Sobre la condición del {unit}: {value}",
-      "fields": { "price": "El precio", "km": "El kilometraje", "owners": "El número de dueños", "condition": "La condición" },
+      "fields": {
+        "price": "El precio",
+        "km": "El kilometraje",
+        "owners": "El número de dueños",
+        "condition": "La condición"
+      },
       "stock": "Tengo estas unidades en el showroom: {list}. Si algún dato falta, lo confirma un asesor.",
       "testDrive": "Abro el formulario para agendar tu test drive. Un asesor lo confirma contigo.",
       "payment": "Abro la calculadora de pagos de Fiesta Motors. Todo pago es un estimado: el pago final depende de la aprobación de crédito.",
@@ -67,6 +80,129 @@
       "advisor": "Te paso con un asesor por WhatsApp para que te atienda una persona.",
       "whatsapp": "Abro WhatsApp con un mensaje que incluye el auto que estás viendo.",
       "hello": "¡Hola! ¿En qué te ayudo?"
+    },
+    "flow": {
+      "needAsk": "Para recomendarte bien, cuéntame: ¿qué te trae por aquí hoy?",
+      "needChoices": {
+        "first": "Es mi primer auto",
+        "change": "Quiero cambiar mi auto",
+        "upgrade": "Ya soy cliente y quiero un upgrade",
+        "looking": "Solo estoy mirando"
+      },
+      "need": {
+        "first": "¡Qué bueno que des ese paso! Comprar tu primer auto es más sencillo de lo que parece y te acompaño en cada parte.",
+        "change": "Entendido, quieres cambiar tu auto. Lo vemos con calma: primero qué buscas y luego cómo aprovechar el que tienes.",
+        "upgrade": "¡Qué gusto tenerte de vuelta! Veamos qué upgrade tiene sentido para ti.",
+        "looking": "Perfecto, sin prisa. Te ayudo a comparar y a ver cuál se ajusta a ti."
+      },
+      "askBody": "¿Qué tipo de vehículo te interesa?",
+      "body": {
+        "suv": "SUV",
+        "truck": "Camioneta (pickup)",
+        "compact": "Compacto o deportivo"
+      },
+      "askBand": "¿Qué rango de precio tienes en mente? (precio publicado, más HST y licencia)",
+      "band": {
+        "low": "Hasta $25,000",
+        "mid": "$25,000 a $35,000",
+        "high": "Más de $35,000"
+      },
+      "recIntro": "Con lo que me cuentas, estas son las opciones que veo en el showroom:",
+      "recNear": "Ninguna coincide exacto con lo que buscas; estas son las más cercanas:",
+      "row": "• {name} · {price} · {km}",
+      "cmpPrice": "Comparando: la más económica es {name}.",
+      "cmpKm": "La de menos kilometraje es {name}.",
+      "cmpNew": "La más reciente es {name}.",
+      "askPath": "¿Pensabas pagarlo de contado o con financiamiento?",
+      "pathUnsure": "Sin problema. ¿Lo pagarías de una vez o prefieres pagos periódicos con financiamiento?",
+      "cash": "De contado el camino es directo: ver el auto, confirmar disponibilidad y precio final con un asesor, y cerrar la compra. ¿Agendamos un test drive o te paso con un asesor?",
+      "cashUnit": "De contado el camino es directo con el {name}: verlo, confirmar disponibilidad y precio final con un asesor, y cerrar la compra. ¿Agendamos un test drive o te paso con un asesor?",
+      "creditIntro": "Fiesta Motors trabaja con distintos perfiles de crédito, incluso sin historial en Canadá. La aprobación y la tasa las define la financiera según tu perfil, y cualquier pago que veas es un estimado.",
+      "consent": "Para orientarte mejor puedo hacerte unas preguntas rápidas (identificación, historial, ingreso…) y reunir lo que normalmente piden las financieras. Es opcional y no es la solicitud oficial. ¿Pasamos a esa etapa de recolección de información?",
+      "creditDeclined": "Sin problema. Puedes usar la calculadora o hablar con un asesor cuando quieras.",
+      "collectStart": "Gracias. Son pocas preguntas, una a la vez, y puedes saltar cualquiera. No me escribas tu SIN, número de licencia, fecha de nacimiento ni datos bancarios: eso solo va en el formulario seguro.",
+      "q": {
+        "id": "¿Cuentas con una identificación canadiense vigente (licencia, tarjeta de residente, etc.)?",
+        "history": "¿Tienes historial de crédito en Canadá?",
+        "score": "¿Sabes tu puntaje de crédito (credit score) aproximado?",
+        "income": "¿Cuál es tu ingreso anual aproximado, antes de impuestos?",
+        "work": "¿Cuál es tu situación laboral?",
+        "down": "¿Cuánto tienes disponible de enganche?",
+        "trade": "¿Tienes un auto para dar a cambio?"
+      },
+      "l": {
+        "id": "Identificación canadiense",
+        "history": "Historial en Canadá",
+        "score": "Credit score",
+        "income": "Ingreso anual",
+        "work": "Situación laboral",
+        "down": "Enganche",
+        "trade": "Auto a cambio"
+      },
+      "a": {
+        "none": "No indicado",
+        "id": {
+          "yes": "Sí",
+          "no": "No",
+          "pending": "En trámite"
+        },
+        "history": {
+          "yes": "Sí",
+          "no": "No",
+          "unsure": "No estoy seguro"
+        },
+        "score": {
+          "unknown": "No lo sé",
+          "lt600": "Menos de 600",
+          "m600": "600 a 699",
+          "m700": "700 o más"
+        },
+        "income": {
+          "lt30": "Menos de $30,000",
+          "m30": "$30,000 a $50,000",
+          "m50": "$50,000 a $80,000",
+          "gt80": "Más de $80,000"
+        },
+        "work": {
+          "employed": "Empleado",
+          "self": "Independiente",
+          "other": "Otra"
+        },
+        "down": {
+          "none": "Ninguno",
+          "lt2": "Menos de $2,000",
+          "m2": "$2,000 a $5,000",
+          "gt5": "Más de $5,000"
+        },
+        "trade": {
+          "yes": "Sí",
+          "no": "No"
+        }
+      },
+      "sumIntro": "Listo, esto es lo que reuní. Es solo una orientación para tu asesor, no una aprobación:",
+      "sumRow": "• {label}: {value}",
+      "sumOutro": "Un asesor confirma si cumples los requisitos mínimos de la financiera y te contacta con la respuesta. ¿Cómo seguimos?",
+      "waIntro": "Hola, quiero avanzar con un financiamiento. Mi resumen:",
+      "sensitive": "Por tu seguridad no escribas ese dato aquí: no lo guardo ni lo repito. Si hace falta, va en el formulario seguro de la solicitud de crédito.",
+      "noUnit": "Aún no hay un auto seleccionado. ¿Te ayudo a encontrar el que te conviene?",
+      "testDrive": "Abro el formulario para agendar tu test drive. Un asesor lo confirma contigo.",
+      "calc": "Abro la calculadora de pagos de Fiesta Motors. Todo pago es un estimado: el pago final depende de la aprobación de crédito.",
+      "creditForm": "Abro la solicitud de crédito segura. Ahí sí van tus datos personales.",
+      "advisor": "Te paso con un asesor por WhatsApp para que te atienda una persona.",
+      "c": {
+        "advisor": "Hablar con un asesor",
+        "unsure": "No lo sé",
+        "unclear": "No lo tengo claro",
+        "cash": "De contado",
+        "credit": "Con financiamiento",
+        "yes": "Sí, adelante",
+        "notNow": "Ahora no",
+        "skip": "Prefiero no decirlo",
+        "testDrive": "Agendar test drive",
+        "calc": "Abrir calculadora",
+        "creditForm": "Abrir solicitud de crédito",
+        "sendAdvisor": "Enviar resumen a un asesor"
+      }
     }
   }
 }

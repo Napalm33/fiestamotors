@@ -60,12 +60,27 @@ export function initAgent() {
 
   const channel = () => (inVoice ? 'web_voz' : 'web_texto');
 
-  function addMessage(role, text) {
+  // `choices`: respuestas rápidas bajo el mensaje. Al tocar una se envía su texto y los botones se retiran.
+  function addMessage(role, text, choices = []) {
     removeThinking();
+    log.querySelectorAll('.fm-choices').forEach((n) => n.remove());
     const el = document.createElement('p');
     el.className = `fm-msg fm-msg--${role}`;
     el.textContent = text;
     log.append(el);
+    if (choices.length) {
+      const row = document.createElement('div');
+      row.className = 'fm-choices';
+      choices.forEach((label) => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'fm-chip';
+        b.textContent = label;
+        b.addEventListener('click', () => sendUser(label));
+        row.append(b);
+      });
+      log.append(row);
+    }
     log.scrollTop = log.scrollHeight;
   }
 
@@ -126,7 +141,7 @@ export function initAgent() {
 
   function runAction(action) {
     if (action.type === 'open_panel') openSitePage(action.page);
-    else if (action.type === 'whatsapp' && !openWhatsApp() && !whatsappConfigured) addMessage('system', t('agent.whatsappMissing'));
+    else if (action.type === 'whatsapp' && !openWhatsApp(action.text) && !whatsappConfigured) addMessage('system', t('agent.whatsappMissing'));
   }
 
   function handleStatus(status) {
@@ -146,7 +161,7 @@ export function initAgent() {
   }
 
   const conn = createConnection({
-    onMessage: ({ role, text }) => addMessage(role, text),
+    onMessage: ({ role, text, choices }) => addMessage(role, text, choices),
     onThinking: setThinking,
     onStatus: handleStatus,
     onAction: runAction,
@@ -216,6 +231,8 @@ export function initAgent() {
       // Solo se nombra la unidad si el cliente está en el showroom o en la franja de unidades.
       const unit = ['showroom', 'units'].includes(state.section) ? getUnit(state.unitId) : null;
       addMessage('agent', unit ? t('agent.greetingUnit', { unit: unitName(unit) }) : t('agent.greeting'));
+      // El embudo arranca por la necesidad del cliente, no por el catálogo.
+      addMessage('agent', t('agent.flow.needAsk'), ['first', 'change', 'upgrade', 'looking'].map((k) => t(`agent.flow.needChoices.${k}`)));
       ensureConnected().catch(() => addMessage('system', t('agent.error')));
     }
     input.focus();
