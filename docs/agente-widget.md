@@ -61,3 +61,8 @@ Para "Fiesta Motors Showroom video" (el código del showroom vive en otra conver
 3. Publicar `<salida.html>` sobre el mismo Artifact.
 
 Si esa conversación republica desde su propio código, el agente insertado se pierde. Para que no pase, o bien se fusiona esta rama y se usa `initAgent()` (ver `docs/prompt-montar-agente.md`), o se repite el paso 2 después de cada publicación.
+
+## Idioma de la conversación
+
+El agente detecta el idioma de lo que escribe el cliente (`src/agent/core/lang.js`, español o inglés) y conduce toda la conversación en ese idioma: respuestas, botones de respuesta rápida y textos del panel. No cambia el idioma del resto del sitio. Los mensajes sin evidencia (nombres, números, "ok") conservan el idioma anterior. Si el cliente toca el botón EN/ES del sitio, la conversación vuelve a seguir al sitio. El contexto que recibe el agente (`idioma`) refleja el idioma detectado.
+- Con ElevenLabs, el idioma lo resuelve el prompt (sección Identidad). En voz conviene activar la herramienta de detección de idioma del agente en ElevenLabs y habilitar español e inglés; no se fuerza desde el widget.

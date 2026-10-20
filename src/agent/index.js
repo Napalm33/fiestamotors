@@ -1,4 +1,5 @@
-import { state, subscribe } from './core/state.js';
+import { state, setState, curLang, subscribe } from './core/state.js';
+import { detectLang } from './core/lang.js';
 import { t } from './core/i18n.js';
 import { getUnit } from './core/inventory.js';
 import { unitName } from './core/format.js';
@@ -180,6 +181,9 @@ export function initAgent() {
   async function sendUser(text) {
     text = text.trim();
     if (!text) return;
+    // Si el cliente escribe en otro idioma, toda la conversación (respuestas, botones y panel) pasa a ese idioma.
+    const detected = detectLang(text);
+    if (detected && detected !== curLang()) setState({ convLang: detected === state.lang ? null : detected });
     addMessage('user', text);
     try {
       await ensureConnected();
@@ -270,7 +274,12 @@ export function initAgent() {
 
   // Cualquier cambio de idioma, unidad, sección o panel del sitio se avisa al agente.
   subscribe((_, changed) => {
-    if ('lang' in changed) renderStatic();
+    // Si el cliente cambia el idioma del sitio, la conversación vuelve a seguirlo.
+    if ('lang' in changed && state.convLang) {
+      setState({ convLang: null });
+      return;
+    }
+    if ('lang' in changed || 'convLang' in changed) renderStatic();
     if (!greeted) return;
     clearTimeout(syncTimer);
     syncTimer = setTimeout(() => conn.updateContext(buildContext(channel())), 400);

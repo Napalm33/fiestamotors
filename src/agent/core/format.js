@@ -1,7 +1,7 @@
-import { state } from './state.js';
+import { curLang } from './state.js';
 import { t } from './i18n.js';
 
-const locale = () => (state.lang === 'es' ? 'es-MX' : 'en-CA');
+const locale = () => (curLang() === 'es' ? 'es-MX' : 'en-CA');
 
 export function unitName(u) {
   return [u.year, u.make, u.model, u.trim].filter(Boolean).join(' ');

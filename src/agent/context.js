@@ -1,10 +1,10 @@
-import { state } from './core/state.js';
+import { state, curLang } from './core/state.js';
 import { getUnit } from './core/inventory.js';
 
 // Contexto que recibe el agente: idioma, canal, unidad (todos sus campos), sección y panel abierto.
 export function buildContext(channel) {
   return {
-    idioma: state.lang,
+    idioma: curLang(),
     canal: channel,
     seccion: state.section,
     panel_sitio: state.sitePage,
