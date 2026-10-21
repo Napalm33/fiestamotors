@@ -1,5 +1,5 @@
 import { t } from './core/i18n.js';
-import { units } from './core/inventory.js';
+import { units, soldUnits } from './core/inventory.js';
 import { unitName, fmtPrice, fmtKm } from './core/format.js';
 
 // Modo demostración: el agente como embudo de ventas, sin claves y solo con datos de inventory.json.
@@ -216,6 +216,16 @@ function findUnit(q) {
   return units.find((u) => q.includes(norm(`${u.make} ${u.model}`)) || q.includes(norm(u.model).split(' ')[0])) || null;
 }
 
+// Unidad ya retirada del inventario publicado que el cliente menciona por nombre.
+function findSold(q) {
+  return soldUnits.find((u) => q.includes(norm(`${u.make} ${u.model}`)) || q.includes(norm(u.model).split(' ')[0])) || null;
+}
+
+function soldReply(u) {
+  flow.stage = null;
+  return reply(line('sold', { name: unitName(u) }), ch([['cmp:start', line('c.similar')], advisorChoice()]));
+}
+
 function unitCard(u) {
   flow.focus = u;
   flow.stage = 'path';
@@ -245,6 +255,10 @@ export function demoReply(input, ctx) {
   // 2) Texto libre según la etapa del embudo
   const staged = parseStage(q, raw);
   const mentioned = findUnit(q);
+  if (!mentioned) {
+    const gone = findSold(q);
+    if (gone) return soldReply(gone);
+  }
   if (mentioned) {
     flow.focus = mentioned;
     ctx = { ...ctx, unidad: mentioned };

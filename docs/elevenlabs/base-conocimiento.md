@@ -30,33 +30,14 @@ Documento para subir a la base de conocimiento del agente en ElevenLabs. Todo lo
 - Cargos adicionales además de HST y licencia: [CONFIRMAR].
 - No se negocia precio ni se ofrecen descuentos por este canal.
 
-## Unidades del showroom (datos del inventario, solo campos publicados)
+## Unidades del showroom (datos del inventario publicado, solo campos publicados)
+<!--unidades:start-->
 ### 2026 Nissan Rogue Dark Armor
-- Año: 2026
-- Marca: Nissan
-- Modelo: Rogue
-- Versión: Dark Armor
-- Carrocería: Sport Utility Vehicle
-- Color exterior: Red
-- Color interior: Black
-- Precio publicado (más HST y licencia): $35,999 CAD
-- Kilometraje: 10,293 km
-- Motor: 1.5L 3 Cylinder
-- Transmisión: CVT
-- Tracción: All-Wheel Drive
-- Combustible: Gasoline
-- Stock: 1101824463
-- Dueños anteriores: dato no publicado, lo confirma un asesor
-- Condición: dato no publicado, lo confirma un asesor
+- NO DISPONIBLE: ya no aparece en el inventario publicado (revisado 2026-10-21). No la ofrezcas ni la describas; si la piden, un asesor confirma y puedes ofrecer opciones parecidas.
 
 ### 2025 Honda HR-V Sport
-- Año: 2025
-- Marca: Honda
-- Modelo: HR-V
-- Versión: Sport
 - Carrocería: SUV
 - Color exterior: Black
-- Color interior: Black
 - Precio publicado (más HST y licencia): $29,995 CAD
 - Kilometraje: 57,904 km
 - Motor: 2L 4 Cylinder
@@ -64,17 +45,11 @@ Documento para subir a la base de conocimiento del agente en ElevenLabs. Todo lo
 - Tracción: All-Wheel Drive
 - Combustible: Gasoline
 - Stock: 389D3B
-- Dueños anteriores: dato no publicado, lo confirma un asesor
-- Condición: dato no publicado, lo confirma un asesor
+- Dueños anteriores y condición: dato no publicado, lo confirma un asesor
 
 ### 2024 Subaru Crosstrek Convenience
-- Año: 2024
-- Marca: Subaru
-- Modelo: Crosstrek
-- Versión: Convenience
 - Carrocería: SUV
 - Color exterior: Grey
-- Color interior: Grey
 - Precio publicado (más HST y licencia): $22,495 CAD
 - Kilometraje: 169,691 km
 - Motor: 2L 4 Cylinder
@@ -82,17 +57,11 @@ Documento para subir a la base de conocimiento del agente en ElevenLabs. Todo lo
 - Tracción: All-Wheel Drive
 - Combustible: Gasoline
 - Stock: 4F787D
-- Dueños anteriores: dato no publicado, lo confirma un asesor
-- Condición: dato no publicado, lo confirma un asesor
+- Dueños anteriores y condición: dato no publicado, lo confirma un asesor
 
 ### 2024 Volkswagen Golf GTI 380 Performance
-- Año: 2024
-- Marca: Volkswagen
-- Modelo: Golf GTI
-- Versión: 380 Performance
 - Carrocería: Hatchback
 - Color exterior: Grey
-- Color interior: Black
 - Precio publicado (más HST y licencia): $39,999 CAD
 - Kilometraje: 16,165 km
 - Motor: 2.0L 4 Cylinder
@@ -100,17 +69,11 @@ Documento para subir a la base de conocimiento del agente en ElevenLabs. Todo lo
 - Tracción: Front Wheel Drive
 - Combustible: Gasoline
 - Stock: 42F304
-- Dueños anteriores: dato no publicado, lo confirma un asesor
-- Condición: dato no publicado, lo confirma un asesor
+- Dueños anteriores y condición: dato no publicado, lo confirma un asesor
 
 ### 2022 Chevrolet Silverado 1500 WT
-- Año: 2022
-- Marca: Chevrolet
-- Modelo: Silverado 1500
-- Versión: WT
 - Carrocería: Pickup-Truck
 - Color exterior: White
-- Color interior: Black
 - Precio publicado (más HST y licencia): $33,499 CAD
 - Kilometraje: 101,216 km
 - Motor: 2.7L 4 Cylinder
@@ -118,10 +81,10 @@ Documento para subir a la base de conocimiento del agente en ElevenLabs. Todo lo
 - Tracción: Four-Wheel Drive
 - Combustible: Gasoline
 - Stock: 775670
-- Dueños anteriores: dato no publicado, lo confirma un asesor
-- Condición: dato no publicado, lo confirma un asesor
+- Dueños anteriores y condición: dato no publicado, lo confirma un asesor
 
-Nota: la Nissan Rogue Dark Armor ya no aparece en el inventario publicado el 2026-10-20; si la piden, el agente dice que un asesor confirma si sigue disponible.
+Actualizado automáticamente el 2026-10-21 desde el inventario publicado.
+<!--unidades:end-->
 
 ## Reseñas de clientes (para dar confianza, sin prometer resultados)
 Los clientes mencionan trato sin presión, ayuda con el presupuesto, explicación clara de los cargos y trámite ágil. El agente puede decir "varios clientes comentan que…", nunca "te aprobamos" ni "aprobación garantizada".

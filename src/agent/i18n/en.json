@@ -203,12 +203,14 @@
         "creditForm": "Open credit application",
         "sendAdvisor": "Send summary to an advisor",
         "compare": "Compare it with other options",
-        "howPay": "How would I pay for it?"
+        "howPay": "How would I pay for it?",
+        "similar": "See similar options"
       },
       "uPrice": "{price} plus HST and licensing",
       "uDrive": "{v}",
       "uNone": "an advisor confirms the details",
-      "unitCard": "Here's what I have on the {name}: {details}. Any missing detail is confirmed by an advisor."
+      "unitCard": "Here's what I have on the {name}: {details}. Any missing detail is confirmed by an advisor.",
+      "sold": "The {name} no longer appears in our published inventory, so I can't offer it. If you like, an advisor can confirm whether something similar is coming, or I can show you similar options we do have."
     },
     "offerCall": "To move faster we can also talk by voice right here, without leaving this screen. Would you like to call?",
     "offerCallYes": "Call now",

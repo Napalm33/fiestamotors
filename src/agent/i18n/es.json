@@ -203,12 +203,14 @@
         "creditForm": "Abrir solicitud de crédito",
         "sendAdvisor": "Enviar resumen a un asesor",
         "compare": "Compararlo con otras opciones",
-        "howPay": "¿Cómo lo pagaría?"
+        "howPay": "¿Cómo lo pagaría?",
+        "similar": "Ver opciones parecidas"
       },
       "uPrice": "{price} más HST y licencia",
       "uDrive": "tracción {v}",
       "uNone": "los datos los confirma un asesor",
-      "unitCard": "Esto tengo del {name}: {details}. Cualquier dato que falte lo confirma un asesor."
+      "unitCard": "Esto tengo del {name}: {details}. Cualquier dato que falte lo confirma un asesor.",
+      "sold": "El {name} ya no aparece en nuestro inventario publicado, así que no te lo puedo ofrecer. Si quieres, un asesor te confirma si hay algo parecido, o te muestro opciones similares que sí tenemos."
     },
     "offerCall": "Para avanzar más rápido también podemos hablar por voz aquí mismo, sin salir de esta pantalla. ¿Quieres llamar?",
     "offerCallYes": "Llamar ahora",
