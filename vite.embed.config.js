@@ -9,6 +9,7 @@ const demoOnly = {
   'import.meta.env.VITE_ELEVENLABS_AGENT_ID': '""',
   'import.meta.env.VITE_AGENT_API_URL': '""',
   'import.meta.env.VITE_AGENT_TEXT_PROVIDER': '""',
+  'import.meta.env.VITE_WHATSAPP_NUMBER': '""', // un número personal de pruebas no debe quedar escrito en una página publicada
 };
 
 export default defineConfig({
