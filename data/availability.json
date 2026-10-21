@@ -1,0 +1,38 @@
+{
+  "checked_at": "2026-10-21T02:07:34.798Z",
+  "source": "ZopDealer feed público",
+  "total_in_stock": 111,
+  "units": {
+    "775670": {
+      "available": true,
+      "site_id": "2902",
+      "price": 33499,
+      "odometer_km": 101216,
+      "url": "https://woodbridge.fiestamotors.ca/inventory/2022-chevrolet-silverado-1500-wt/2902/"
+    },
+    "1101824463": {
+      "available": false
+    },
+    "389D3B": {
+      "available": true,
+      "site_id": "2915",
+      "price": 29995,
+      "odometer_km": 57904,
+      "url": "https://woodbridge.fiestamotors.ca/inventory/2025-honda-hr-v-sport/2915/"
+    },
+    "4F787D": {
+      "available": true,
+      "site_id": "2913",
+      "price": 22495,
+      "odometer_km": 169691,
+      "url": "https://woodbridge.fiestamotors.ca/inventory/2024-subaru-crosstrek-convenience/2913/"
+    },
+    "42F304": {
+      "available": true,
+      "site_id": "2431",
+      "price": 39999,
+      "odometer_km": 16165,
+      "url": "https://woodbridge.fiestamotors.ca/inventory/2024-volkswagen-golf-gti-380-performance/2431/"
+    }
+  }
+}

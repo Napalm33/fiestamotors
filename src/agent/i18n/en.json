@@ -1,0 +1,223 @@
+{
+  "common": {
+    "consult": "Ask us",
+    "close": "Close"
+  },
+  "pages": {
+    "test_drive": "Book a test drive",
+    "trade_in": "Trade-in appraisal",
+    "servicio": "Service appointment",
+    "contacto": "Contact us",
+    "calculadora": "Payment calculator",
+    "solicitud_credito": "Credit application"
+  },
+  "sitePanel": {
+    "openTab": "Open in new tab",
+    "loading": "Loading…",
+    "noEmbed": "This page of the original site opens in a new tab.",
+    "go": "Open: {page}"
+  },
+  "agent": {
+    "open": "Open chat with Sofia",
+    "close": "Close chat with Sofia",
+    "title": "Sofia · Fiesta Motors",
+    "subtitle": "Virtual assistant powered by artificial intelligence",
+    "demoBadge": "Demo mode",
+    "greeting": "Hi, I'm Sofia, Fiesta Motors' AI assistant. How can I help you today?",
+    "greetingUnit": "Hi, I'm Sofia, Fiesta Motors' AI assistant. I see you're looking at the {unit}. Anything you'd like to know about it?",
+    "inputLabel": "Type your message",
+    "inputPlaceholder": "Type your message…",
+    "send": "Send",
+    "thinking": "Checking",
+    "connecting": "Connecting…",
+    "call": "Call",
+    "callUnavailable": "Voice turns on once the ElevenLabs agent is configured",
+    "hangup": "Hang up",
+    "mute": "Mute microphone",
+    "unmute": "Unmute microphone",
+    "listening": "Listening…",
+    "speaking": "Speaking…",
+    "voiceEnded": "Call ended. You can keep going by text.",
+    "micDenied": "I couldn't use the microphone. Check the browser permission or type your message.",
+    "error": "I couldn't reach the assistant. Try again or talk to an advisor at 416-855-6663.",
+    "disconnected": "The conversation closed. Type to continue.",
+    "quick": {
+      "testDrive": "Book a test drive",
+      "payment": "Calculate payment",
+      "advisor": "Talk to an advisor",
+      "whatsapp": "Continue on WhatsApp"
+    },
+    "userMsg": {
+      "testDrive": "I'd like to book a test drive",
+      "payment": "I'd like to calculate a payment",
+      "advisor": "I'd like to talk to an advisor"
+    },
+    "whatsappMissing": "The WhatsApp number isn't configured in this demo yet.",
+    "whatsappMsgUnit": "Hi, I'm interested in the {unit} (stock {stock}).",
+    "whatsappMsgGeneric": "Hi, I'd like information about your vehicles.",
+    "demo": {
+      "fallback": "An advisor will confirm that. Want me to connect you with one, or shall we go on with another question?",
+      "noUnit": "No vehicle is selected yet. Pick one in the showroom and I'll tell you what I have on it.",
+      "empty": "{field} for that vehicle is confirmed by an advisor.",
+      "price": "The {unit} has a listed price of {value}, plus HST and licensing. An advisor confirms the final price.",
+      "km": "The {unit} has {value}.",
+      "owners": "The {unit} has had {value} previous owner(s).",
+      "condition": "About the condition of the {unit}: {value}",
+      "fields": {
+        "price": "The price",
+        "km": "The mileage",
+        "owners": "The number of owners",
+        "condition": "The condition"
+      },
+      "stock": "These are the vehicles in the showroom: {list}. If any detail is missing, an advisor will confirm it.",
+      "testDrive": "I'm opening the form to book your test drive. An advisor will confirm it with you.",
+      "payment": "I'm opening Fiesta Motors' payment calculator. Every payment is an estimate: the final payment depends on credit approval.",
+      "credit": "Fiesta Motors works with all kinds of credit, but approval and rate are set by the lender based on your profile. Would you like to open the application or talk to an advisor?",
+      "service": "I'm opening the service appointment form. A representative will confirm the date and time with you.",
+      "tradeIn": "I'm opening the trade-in appraisal.",
+      "contact": "I'm opening the contact page. You can also call 416-855-6663.",
+      "hours": "We're at 7515 Martin Grove Rd, Woodbridge, ON L4L 9E4. Hours: Monday to Friday 9:00 to 20:00, Saturday 9:00 to 18:00, Sunday by appointment only. Phone: 416-855-6663.",
+      "advisor": "I'll connect you with an advisor on WhatsApp so a person can help you.",
+      "whatsapp": "I'm opening WhatsApp with a message that includes the vehicle you're viewing.",
+      "hello": "Hi! How can I help?"
+    },
+    "flow": {
+      "needAsk": "To recommend the right one, tell me: what brings you here today?",
+      "needChoices": {
+        "first": "It's my first car",
+        "change": "I want to change my car",
+        "upgrade": "I'm already a customer and want an upgrade",
+        "looking": "Just looking"
+      },
+      "need": {
+        "first": "Great that you're taking this step! Buying your first car is simpler than it looks and I'll be with you through every part.",
+        "change": "Got it, you want to change your car. Let's take it step by step: first what you're after, then how to make the most of yours.",
+        "upgrade": "Good to have you back! Let's see which upgrade makes sense for you.",
+        "looking": "Perfect, no rush. I'll help you compare and see which one fits you."
+      },
+      "askBody": "What type of vehicle are you interested in?",
+      "body": {
+        "suv": "SUV",
+        "truck": "Pickup truck",
+        "compact": "Compact or sporty"
+      },
+      "askBand": "What price range do you have in mind? (listed price, plus HST and licensing)",
+      "band": {
+        "low": "Up to $25,000",
+        "mid": "$25,000 to $35,000",
+        "high": "Over $35,000"
+      },
+      "recIntro": "From what you tell me, these are the options I see in the showroom:",
+      "recNear": "None match exactly what you're after; these are the closest:",
+      "row": "• {name} · {price} · {km}",
+      "cmpPrice": "Comparing: the most affordable is {name}.",
+      "cmpKm": "The one with the lowest mileage is {name}.",
+      "cmpNew": "The newest is {name}.",
+      "askPath": "Were you thinking of paying cash or financing?",
+      "pathUnsure": "No problem. Would you pay all at once, or prefer regular payments with financing?",
+      "cash": "Paying cash is a straight line: see the car, confirm availability and final price with an advisor, and close the purchase. Shall we book a test drive, or should I connect you with an advisor?",
+      "cashUnit": "Paying cash is a straight line with the {name}: see it, confirm availability and final price with an advisor, and close the purchase. Shall we book a test drive, or should I connect you with an advisor?",
+      "creditIntro": "Fiesta Motors works with different credit profiles, including no credit history in Canada. Approval and rate are set by the lender based on your profile, and any payment you see is an estimate.",
+      "consent": "To guide you better I can ask a few quick questions (ID, history, income…) and gather what lenders usually ask for. It's optional and it's not the official application. Shall we move on to that information-gathering step?",
+      "creditDeclined": "No problem. You can use the calculator or talk to an advisor whenever you like.",
+      "collectStart": "Thanks. It's a few questions, one at a time, and you can skip any of them. Please don't type your SIN, licence number, date of birth or banking details: those only go in the secure form.",
+      "q": {
+        "id": "Do you have valid Canadian ID (driver's licence, PR card, etc.)?",
+        "history": "Do you have credit history in Canada?",
+        "score": "Do you know your approximate credit score?",
+        "income": "What's your approximate annual income, before taxes?",
+        "work": "What's your employment situation?",
+        "down": "How much do you have available for a down payment?",
+        "trade": "Do you have a vehicle to trade in?"
+      },
+      "l": {
+        "id": "Canadian ID",
+        "history": "Canadian credit history",
+        "score": "Credit score",
+        "income": "Annual income",
+        "work": "Employment",
+        "down": "Down payment",
+        "trade": "Trade-in"
+      },
+      "a": {
+        "none": "Not provided",
+        "id": {
+          "yes": "Yes",
+          "no": "No",
+          "pending": "In progress"
+        },
+        "history": {
+          "yes": "Yes",
+          "no": "No",
+          "unsure": "Not sure"
+        },
+        "score": {
+          "unknown": "I don't know",
+          "lt600": "Under 600",
+          "m600": "600 to 699",
+          "m700": "700 or more"
+        },
+        "income": {
+          "lt30": "Under $30,000",
+          "m30": "$30,000 to $50,000",
+          "m50": "$50,000 to $80,000",
+          "gt80": "Over $80,000"
+        },
+        "work": {
+          "employed": "Employed",
+          "self": "Self-employed",
+          "other": "Other"
+        },
+        "down": {
+          "none": "None",
+          "lt2": "Under $2,000",
+          "m2": "$2,000 to $5,000",
+          "gt5": "Over $5,000"
+        },
+        "trade": {
+          "yes": "Yes",
+          "no": "No"
+        }
+      },
+      "sumIntro": "Done, here's what I gathered. It's only guidance for your advisor, not an approval:",
+      "sumRow": "• {label}: {value}",
+      "sumOutro": "An advisor confirms whether you meet the lender's minimum requirements and contacts you with the answer. How shall we continue?",
+      "waIntro": "Hi, I'd like to move forward with financing. My summary:",
+      "sensitive": "For your safety, please don't type that here: I don't store it or repeat it. If needed, it goes in the secure form of the credit application.",
+      "noUnit": "No vehicle is selected yet. Shall I help you find the right one?",
+      "testDrive": "I'm opening the form to book your test drive. An advisor will confirm it with you.",
+      "calc": "I'm opening Fiesta Motors' payment calculator. Every payment is an estimate: the final payment depends on credit approval.",
+      "creditForm": "I'm opening the secure credit application. That's where your personal details go.",
+      "advisor": "I'll connect you with an advisor on WhatsApp so a person can help you.",
+      "c": {
+        "advisor": "Talk to an advisor",
+        "unsure": "I'm not sure",
+        "unclear": "Not sure yet",
+        "cash": "Cash",
+        "credit": "Financing",
+        "yes": "Yes, go ahead",
+        "notNow": "Not now",
+        "skip": "Prefer not to say",
+        "testDrive": "Book a test drive",
+        "calc": "Open calculator",
+        "creditForm": "Open credit application",
+        "sendAdvisor": "Send summary to an advisor",
+        "compare": "Compare it with other options",
+        "howPay": "How would I pay for it?",
+        "similar": "See similar options"
+      },
+      "uPrice": "{price} plus HST and licensing",
+      "uDrive": "{v}",
+      "uNone": "an advisor confirms the details",
+      "unitCard": "Here's what I have on the {name}: {details}. Any missing detail is confirmed by an advisor.",
+      "sold": "The {name} no longer appears in our published inventory, so I can't offer it. If you like, an advisor can confirm whether something similar is coming, or I can show you similar options we do have."
+    },
+    "offerCall": "To move faster we can also talk by voice right here, without leaving this screen. Would you like to call?",
+    "offerCallYes": "Call now",
+    "offerCallNo": "Keep texting",
+    "offerCallNoMsg": "I'd rather keep texting",
+    "voiceGreeting": "Hi, I'm Sofia, Fiesta Motors' AI assistant. How can I help you today?",
+    "whatsappPrompt": "Here's the quick link to talk to an advisor on WhatsApp.",
+    "whatsappGo": "Open WhatsApp"
+  }
+}
