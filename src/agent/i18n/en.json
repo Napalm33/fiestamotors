@@ -18,13 +18,13 @@
     "go": "Open: {page}"
   },
   "agent": {
-    "open": "Open assistant",
-    "close": "Close assistant",
-    "title": "Fiesta Motors assistant",
+    "open": "Open chat with Sofia",
+    "close": "Close chat with Sofia",
+    "title": "Sofia · Fiesta Motors",
     "subtitle": "Virtual assistant powered by artificial intelligence",
     "demoBadge": "Demo mode",
-    "greeting": "Hi, I'm Fiesta Motors' virtual assistant, an AI. How can I help?",
-    "greetingUnit": "Hi, I'm Fiesta Motors' virtual assistant, an AI. I see you're looking at the {unit}. Anything you'd like to know about it?",
+    "greeting": "Hi, I'm Sofia, Fiesta Motors' virtual assistant, an AI. How can I help?",
+    "greetingUnit": "Hi, I'm Sofia, Fiesta Motors' virtual assistant, an AI. I see you're looking at the {unit}. Anything you'd like to know about it?",
     "inputLabel": "Type your message",
     "inputPlaceholder": "Type your message…",
     "send": "Send",
@@ -216,6 +216,6 @@
     "offerCallYes": "Call now",
     "offerCallNo": "Keep texting",
     "offerCallNoMsg": "I'd rather keep texting",
-    "voiceGreeting": "Hi, I'm Fiesta Motors' virtual assistant, an AI. How can I help?"
+    "voiceGreeting": "Hi, I'm Sofia, Fiesta Motors' virtual assistant, an AI. How can I help?"
   }
 }

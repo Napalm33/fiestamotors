@@ -21,8 +21,11 @@ export class ElevenLabsProvider {
     // En texto el widget ya mostró su saludo escrito; se descarta el primer mensaje del agente.
     this.skipGreeting = !voice;
     const clientTools = {
-      abrir_pagina_sitio: ({ pagina }) => {
-        if (!SITE_PAGES[pagina]) return `Página desconocida: ${pagina}`;
+      abrir_pagina_sitio: ({ pagina } = {}) => {
+        // Si la herramienta no trae el parámetro (o trae un valor que no existe), el agente recibe el motivo y los valores válidos.
+        if (!SITE_PAGES[pagina]) {
+          return `Error: no se abrió nada. El parámetro "pagina" ${pagina ? `vale "${pagina}", que no existe` : 'no llegó'}. Valores válidos: ${Object.keys(SITE_PAGES).join(', ')}. No le digas al cliente que se abrió.`;
+        }
         this.h.onAction({ type: 'open_panel', page: pagina });
         return 'Página abierta en pantalla';
       },
