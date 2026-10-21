@@ -71,3 +71,8 @@ El agente detecta el idioma de lo que escribe el cliente (`src/agent/core/lang.j
 
 El panel abre en texto. El agente decide cuándo la voz agiliza el proceso y llama a la herramienta de cliente `ofrecer_llamada`: el widget muestra una invitación con "Llamar ahora" y "Seguir por texto" (solo si la voz está disponible; en modo demostración no se ofrece). Registrar `ofrecer_llamada` en el agente de ElevenLabs además de `abrir_pagina_sitio` y `abrir_whatsapp`. El saludo hablado sale de la variable dinámica `primer_mensaje` (en el idioma de la página).
 Configuración completa de ElevenLabs en `docs/elevenlabs/`.
+
+## Apertura automática al final del sitio
+
+El sitio avisa con el evento `fm:site-end` (en `window` o `document`) que el cliente llegó al final. El agente abre su panel **una sola vez por visita** (por pestaña, con `sessionStorage`; si el almacenamiento no está disponible, una vez por carga de página). No enfoca el campo de texto, para que en celular no se abra el teclado solo. Si el cliente ya lo había abierto, no hace nada. Una recarga en la misma pestaña no lo vuelve a abrir.
+Contrato para el sitio: `window.dispatchEvent(new CustomEvent('fm:site-end'))`.

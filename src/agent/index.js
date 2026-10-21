@@ -237,7 +237,7 @@ export function initAgent() {
     await conn.stopVoice(buildContext('web_texto')).catch(() => {});
   }
 
-  async function openPanel() {
+  async function openPanel({ focus = true } = {}) {
     root.dataset.open = 'true';
     panel.hidden = false;
     fab.setAttribute('aria-expanded', 'true');
@@ -251,7 +251,8 @@ export function initAgent() {
       addMessage('agent', t('agent.flow.needAsk'), ['first', 'change', 'upgrade', 'looking'].map((k) => t(`agent.flow.needChoices.${k}`)));
       ensureConnected().catch(() => addMessage('system', t('agent.error')));
     }
-    input.focus();
+    // Una apertura automática no enfoca el campo: en celular abriría el teclado sin que el cliente lo pidiera.
+    if (focus) input.focus();
   }
 
   function closePanel() {
@@ -261,6 +262,28 @@ export function initAgent() {
     fab.setAttribute('aria-label', t('agent.open'));
     fab.focus();
   }
+
+  // El sitio avisa con el evento `fm:site-end` (en window o en document) que el cliente llegó al final:
+  // el panel se abre una sola vez por visita (por pestaña; si el almacenamiento no está disponible, por carga de página).
+  const SITE_END_KEY = 'fm-agent-site-end';
+  let siteEndHandled = false;
+  const siteEndSeen = () => {
+    try {
+      return sessionStorage.getItem(SITE_END_KEY) === '1';
+    } catch {
+      return false;
+    }
+  };
+  function onSiteEnd() {
+    if (siteEndHandled || siteEndSeen()) return;
+    siteEndHandled = true;
+    try {
+      sessionStorage.setItem(SITE_END_KEY, '1');
+    } catch {}
+    if (root.dataset.open !== 'true') openPanel({ focus: false });
+  }
+  window.addEventListener('fm:site-end', onSiteEnd);
+  document.addEventListener('fm:site-end', onSiteEnd);
 
   fab.addEventListener('click', () => (root.dataset.open === 'true' ? closePanel() : openPanel()));
   $('.fm-agent__x').addEventListener('click', closePanel);

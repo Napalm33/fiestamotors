@@ -21,6 +21,7 @@ Si algo del agente te parece mal o falta (el inicio, el estilo, un botón, el id
 Solo estos puntos de contacto, sin cambiarles el nombre:
 - Mantener <html lang="es|en">: el agente sigue el idioma del sitio con ese atributo.
 - Mantener #inv, #inv-card y .hero (el agente lee de ahí la sección visible y qué auto se ve).
+- Al llegar al final del sitio, disparar UNA vez el evento window.dispatchEvent(new CustomEvent('fm:site-end')). El agente se encarga de abrir su panel, una sola vez por visita. El sitio no abre nada por su cuenta (ni menú, ni dock): solo avisa con el evento.
 - En las fichas, dejar los botones con data-open-page="test_drive", data-open-page="calculadora" y data-agent-open: el agente los atiende solo.
 Todo lo demás del sitio es libre.
 
