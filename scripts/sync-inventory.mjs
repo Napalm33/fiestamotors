@@ -27,7 +27,7 @@ async function fetchFeed() {
 
 // El feed trae `odometer_numeric` en 0 para algunas unidades; `odometer` sí viene bien. Un 0 se toma como "sin dato".
 const num = (v) => (v === null || v === undefined || v === '' || Number(v) === 0 ? null : Number(v));
-const slim = (u) => ({ stock: String(u.stock_no), site_id: u.inventory_id, vin: u.vin || '', year: Number(u.year), make: u.make, model: u.model, trim: u.trim || '', price: num(u.price), odometer_km: num(u.odometer) ?? num(u.odometer_numeric), sell_alt: num(u.selling_price_numeric), url: u.page_url });
+const slim = (u) => ({ stock: String(u.stock_no), site_id: u.inventory_id, vin: u.vin || '', year: Number(u.year), make: u.make, model: u.model, trim: u.trim || '', body: u.body_type || '', drivetrain: u.drivetrain || '', fuel_type: u.fuel_type || '', price: num(u.price), odometer_km: num(u.odometer) ?? num(u.odometer_numeric), sell_alt: num(u.selling_price_numeric), url: u.page_url });
 const name = (u) => [u.year, u.make, u.model, u.trim].filter(Boolean).join(' ');
 const money = (n) => (n == null ? 'sin precio' : `$${Number(n).toLocaleString('en-CA')}`);
 
@@ -80,6 +80,19 @@ if (existsSync(path(kbPath))) {
   const re = /<!--unidades:start-->[\s\S]*?<!--unidades:end-->/;
   if (re.test(kb)) write(kbPath, kb.replace(re, `<!--unidades:start-->\n${block}\nActualizado automáticamente el ${now.slice(0, 10)} desde el inventario publicado.\n<!--unidades:end-->`));
   else console.warn('La base de conocimiento no tiene los marcadores <!--unidades:start--> y <!--unidades:end-->; no se actualizó.');
+}
+
+// Inventario publicado completo (resumen de todas las unidades), para que el agente recomiende con datos reales
+const invPath = 'docs/elevenlabs/base-conocimiento.md';
+if (existsSync(path(invPath))) {
+  const kb2 = readFileSync(path(invPath), 'utf8');
+  const re2 = /<!--inventario:start-->[\s\S]*?<!--inventario:end-->/;
+  const priced = live.filter((u) => u.price != null).sort((a, b) => a.price - b.price);
+  const med = priced[Math.floor(priced.length / 2)]?.price;
+  const lines = priced.map((u) => `- ${name(u)} | $${u.price.toLocaleString('en-CA')} | ${u.odometer_km != null ? `${u.odometer_km.toLocaleString('en-CA')} km` : 'km: lo confirma un asesor'}${u.body ? ` | ${u.body}` : ''}${u.drivetrain ? ` | ${u.drivetrain}` : ''} | stock ${u.stock}`);
+  const body2 = `<!--inventario:start-->\nTodas las unidades publicadas el ${now.slice(0, 10)} (${priced.length}), de la más económica a la más cara. Precios en CAD, más HST y licencia. Rango: desde $${priced[0].price.toLocaleString('en-CA')} hasta $${priced.at(-1).price.toLocaleString('en-CA')}; la mitad cuesta menos de $${med.toLocaleString('en-CA')}. Dueños anteriores y condición: no publicados, los confirma un asesor.\n\n${lines.join('\n')}\n<!--inventario:end-->`;
+  if (re2.test(kb2)) write(invPath, kb2.replace(re2, body2));
+  else console.warn('La base de conocimiento no tiene los marcadores <!--inventario:start--> y <!--inventario:end-->; no se actualizó el inventario completo.');
 }
 
 // Reporte

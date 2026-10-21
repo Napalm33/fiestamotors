@@ -1,12 +1,13 @@
 import { t } from './core/i18n.js';
-import { units, soldUnits } from './core/inventory.js';
+import { units, soldUnits, catalog } from './core/inventory.js';
 import { unitName, fmtPrice, fmtKm } from './core/format.js';
 
 // Modo demostración: el agente como embudo de ventas, sin claves y solo con datos de inventory.json.
 // Orden del embudo: necesidad -> tipo de auto y presupuesto -> recomendación y comparativa -> contado o crédito.
 // Contado va en línea recta a la compra. Solo si hay financiamiento se pide permiso para la etapa de
 // recolección de información. No inventa datos, no promete aprobación y no calcula pagos.
-const BAND_MAX = { low: 25000, mid: 35000 };
+// Rangos pensados con el inventario real: la mitad de los autos cuesta menos de $20,000 y hay desde unos $4,000.
+const BAND_MAX = { b1: 10000, b2: 20000, b3: 30000 };
 const SENSITIVE = /\b\d{3}[ -]?\d{3}[ -]?\d{3}\b|\b(?:\d[ -]?){13,19}\b/; // posible SIN o tarjeta
 
 const norm = (s) => String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').trim();
@@ -15,7 +16,7 @@ const has = (q, words) => words.some((w) => (w.length <= 3 ? new RegExp(`\\b${w}
 
 const flow = fresh();
 function fresh() {
-  return { need: null, body: null, band: null, path: null, picks: [], focus: null, stage: null, step: 0, answers: {}, pending: [] };
+  return { need: null, worry: null, use: null, pref: null, unclear: 0, body: null, band: null, path: null, picks: [], focus: null, stage: null, step: 0, answers: {}, pending: [] };
 }
 export function resetFlow() {
   Object.assign(flow, fresh());
@@ -25,9 +26,16 @@ const category = (u) => {
   const b = norm(u.body || '');
   if (b.includes('suv') || b.includes('sport utility')) return 'suv';
   if (b.includes('truck') || b.includes('pickup')) return 'truck';
+  if (b.includes('van')) return 'van';
   return 'compact';
 };
-const band = (u) => (u.price == null ? null : u.price <= BAND_MAX.low ? 'low' : u.price <= BAND_MAX.mid ? 'mid' : 'high');
+const band = (u) => (u.price == null ? null : u.price <= BAND_MAX.b1 ? 'b1' : u.price <= BAND_MAX.b2 ? 'b2' : u.price <= BAND_MAX.b3 ? 'b3' : 'b4');
+// Para qué lo usará -> carrocerías que le sirven (preferencia, no filtro duro)
+const USE_BODY = { city: ['compact', 'suv'], family: ['suv', 'van'], highway: ['compact', 'suv'], work: ['truck', 'van'] };
+const priceStats = () => {
+  const p = catalog.map((u) => u.price).sort((a, b) => a - b);
+  return { min: p[0], median: p[Math.floor(p.length / 2)] };
+};
 
 // Preguntas de la etapa de recolección de información (una a la vez, todas se pueden saltar).
 const STEPS = [
@@ -52,37 +60,75 @@ const advisorChoice = () => ['act:advisor', line('c.advisor')];
 
 function askBody(intro) {
   flow.stage = 'body';
-  const cats = [...new Set(units.map(category))];
+  const cats = [...new Set(catalog.map(category))];
   return reply(`${intro}${line('askBody')}`, ch([...cats.map((c) => [`body:${c}`, line(`body.${c}`)]), ['body:any', line('c.unsure')]]));
 }
 
-function askBand() {
+// Descubrimiento: primero qué lo frena, luego para qué lo usará, y solo después el presupuesto.
+function askWorry(intro) {
+  flow.stage = 'worry';
+  return reply(`${intro}${line('askWorry')}`, ch(['credit', 'price', 'which', 'process', 'none'].map((k) => [`worry:${k}`, line(`worry.${k}`)])));
+}
+
+function askUse(intro) {
+  flow.stage = 'use';
+  return reply(`${intro}${line('askUse')}`, ch([...['city', 'family', 'highway', 'work'].map((k) => [`use:${k}`, line(`use.${k}`)]), ['use:unknown', line('use.unknown')]]));
+}
+
+function askBand(intro = '') {
   flow.stage = 'band';
-  return reply(line('askBand'), ch([['band:low', line('band.low')], ['band:mid', line('band.mid')], ['band:high', line('band.high')], ['band:any', line('c.unclear')]]));
+  return reply(`${intro}${line('askBand')}`, ch([...['b1', 'b2', 'b3', 'b4'].map((k) => [`band:${k}`, line(`band.${k}`)]), ['band:any', line('c.unclear')]]));
+}
+
+// Ante un "no sé" en el presupuesto no se asume nada: se pregunta algo más fácil de responder.
+function askPref() {
+  flow.stage = 'pref';
+  return reply(line('askPref'), ch([...['cheap', 'balanced', 'new'].map((k) => [`pref:${k}`, line(`pref.${k}`)]), ['pref:any', line('c.unsure')]]));
+}
+
+// Tras varias respuestas sin dato no se llena de opciones al azar: se ofrece ver todo con calma o hablar con una persona.
+function tooUnclear() {
+  flow.stage = 'done';
+  return reply(line('tooUnclear'), ch([['act:inventory', line('c.openInventory')], advisorChoice()]));
 }
 
 function recommend() {
-  let pool = units.filter((u) => (!flow.body || category(u) === flow.body) && (!flow.band || band(u) === flow.band));
-  const exact = pool.length > 0;
-  if (!exact) {
-    // Sin coincidencia exacta: se ofrecen las más cercanas por precio, nunca se inventa una.
-    const target = flow.band ? { low: 22000, mid: 30000, high: 40000 }[flow.band] : null;
-    pool = [...units].sort((a, b) => (target ? Math.abs((a.price ?? 1e9) - target) - Math.abs((b.price ?? 1e9) - target) : 0));
+  const wantBody = flow.body ? [flow.body] : USE_BODY[flow.use] || null;
+  let pool = catalog.filter((u) => !flow.band || band(u) === flow.band);
+  if (!flow.band) {
+    // Sin presupuesto, la preferencia fija el punto de partida.
+    if (flow.pref === 'cheap') pool = catalog.filter((u) => u.price <= 15000);
+    else if (flow.pref === 'new') pool = catalog.filter((u) => u.year >= 2021);
+    else pool = catalog.filter((u) => u.price > 12000 && u.price <= 25000);
   }
-  flow.picks = pool.slice(0, 3);
+  if (flow.body) {
+    const only = pool.filter((u) => category(u) === flow.body);
+    if (only.length) pool = only; // si el tipo pedido no existe en el rango, se muestra el rango sin ese filtro
+  }
+  const fit = (u) => (wantBody && wantBody.includes(category(u)) ? 0 : 1);
+  const order = flow.pref === 'new' ? (a, b) => b.year - a.year || (a.odometer_km ?? 1e9) - (b.odometer_km ?? 1e9) : flow.pref === 'cheap' ? (a, b) => a.price - b.price : (a, b) => (a.odometer_km ?? 1e9) - (b.odometer_km ?? 1e9);
+  pool = [...pool].sort((a, b) => fit(a) - fit(b) || order(a, b));
+  // Hasta tres modelos distintos, para que compare de verdad.
+  const seen = new Set();
+  flow.picks = [];
+  for (const u of pool) {
+    const k = `${u.make} ${u.model}`;
+    if (!seen.has(k)) { seen.add(k); flow.picks.push(u); }
+    if (flow.picks.length === 3) break;
+  }
   flow.focus = flow.picks[0] || null;
   const rows = flow.picks.map((u) => line('row', { name: unitName(u), price: fmtPrice(u), km: fmtKm(u) })).join('\n');
   const parts = [];
   if (flow.picks.length > 1) {
-    const priced = flow.picks.filter((u) => u.price != null);
     const withKm = flow.picks.filter((u) => u.odometer_km != null);
-    if (priced.length > 1) parts.push(line('cmpPrice', { name: unitName([...priced].sort((a, b) => a.price - b.price)[0]) }));
+    parts.push(line('cmpPrice', { name: unitName([...flow.picks].sort((a, b) => a.price - b.price)[0]) }));
     if (withKm.length > 1) parts.push(line('cmpKm', { name: unitName([...withKm].sort((a, b) => a.odometer_km - b.odometer_km)[0]) }));
     parts.push(line('cmpNew', { name: unitName([...flow.picks].sort((a, b) => b.year - a.year)[0]) }));
   }
+  const intro = !flow.band && flow.pref ? line('recPref', { what: line(`prefText.${flow.pref}`) }) : flow.use && flow.use !== 'unknown' ? line('recUse', { why: line(`useWhy.${flow.use}`) }) : line('recIntro');
   flow.stage = 'path';
-  const text = [line(exact ? 'recIntro' : 'recNear'), rows, parts.join(' '), line('askPath')].filter(Boolean).join('\n\n');
-  return reply(text, ch([['path:cash', line('c.cash')], ['path:credit', line('c.credit')], ['path:unsure', line('c.unsure')]]));
+  const text = [intro, rows, parts.join(' '), line('askPath')].filter(Boolean).join('\n\n');
+  return reply(text, ch([['path:cash', line('c.cash')], ['path:credit', line('c.credit')], ['path:unsure', line('c.unsure')], ['cmp:start', line('c.otherType')]]));
 }
 
 function cashPath() {
@@ -120,15 +166,33 @@ function handleToken(token, text) {
   const [kind, a, b] = token.split(':');
   if (kind === 'need') {
     flow.need = a;
-    return askBody(`${line(`need.${a}`)}\n\n`);
+    return askWorry(`${line(`need.${a}`)}\n\n`);
+  }
+  if (kind === 'worry') {
+    flow.worry = a;
+    const { min, median } = priceStats();
+    return askUse(`${line(`worryReply.${a}`, { min: fmtPrice({ price: min }), median: fmtPrice({ price: median }) })}\n\n`);
+  }
+  if (kind === 'use') {
+    flow.use = a;
+    if (a === 'unknown') flow.unclear += 1;
+    return askBand(a === 'unknown' ? `${line('useUnknown')}\n\n` : '');
   }
   if (kind === 'body') {
     flow.body = a === 'any' ? null : a;
-    return askBand();
+    return flow.band || flow.pref ? recommend() : askBand();
   }
   if (kind === 'band') {
     flow.band = a === 'any' ? null : a;
-    return recommend();
+    if (a !== 'any') return recommend();
+    flow.unclear += 1;
+    return askPref();
+  }
+  if (kind === 'pref') {
+    flow.pref = a === 'any' ? null : a;
+    if (a !== 'any') return recommend();
+    flow.unclear += 1;
+    return flow.unclear >= 3 ? tooUnclear() : recommend();
   }
   if (kind === 'cmp') return askBody('');
   if (kind === 'path') {
@@ -160,6 +224,7 @@ function handleToken(token, text) {
     if (a === 'testdrive') return { ...reply(line('testDrive')), actions: [{ type: 'open_panel', page: 'test_drive' }] };
     if (a === 'calc') return { ...reply(line('calc')), actions: [{ type: 'open_panel', page: 'calculadora' }] };
     if (a === 'credit') return { ...reply(line('creditForm')), actions: [{ type: 'open_panel', page: 'solicitud_credito' }] };
+    if (a === 'inventory') return { ...reply(line('inventory')), actions: [{ type: 'open_panel', page: 'inventario' }] };
     return { ...reply(line('advisor')), actions: [{ type: 'whatsapp', text: summaryText() }] };
   }
   return null;
@@ -170,6 +235,23 @@ function parseStage(q, raw) {
   switch (flow.stage) {
     case 'need':
       return needFromText(q);
+    case 'worry':
+      if (has(q, ['aprueb', 'credito', 'credit', 'approv', 'financ', 'buro'])) return 'worry:credit';
+      if (has(q, ['caro', 'precio', 'dinero', 'expensive', 'afford', 'price', 'cost'])) return 'worry:price';
+      if (has(q, ['cual', 'elegir', 'conviene', 'which', 'choose', 'decid'])) return 'worry:which';
+      if (has(q, ['proceso', 'complicad', 'tramite', 'process', 'complicated', 'paperwork'])) return 'worry:process';
+      return has(q, ['nada', 'ninguna', 'nothing', 'none', 'solo quiero ver', 'just want']) ? 'worry:none' : null;
+    case 'use':
+      if (has(q, ['familia', 'ninos', 'hijos', 'family', 'kids', 'children'])) return 'use:family';
+      if (has(q, ['carretera', 'viaje', 'highway', 'trip', 'travel'])) return 'use:highway';
+      if (has(q, ['carga', 'obra', 'camioneta de trabajo', 'work', 'haul', 'tow', 'remolc'])) return 'use:work';
+      if (has(q, ['ciudad', 'trabajo', 'diario', 'city', 'commute', 'daily'])) return 'use:city';
+      return has(q, ['no se', 'not sure', 'dont know']) ? 'use:unknown' : null;
+    case 'pref':
+      if (has(q, ['economic', 'barato', 'cheap', 'cheapest', 'lowest price'])) return 'pref:cheap';
+      if (has(q, ['nuevo', 'menos kilometraje', 'newer', 'new', 'low mileage'])) return 'pref:new';
+      if (has(q, ['equilibrio', 'medio', 'balance', 'balanced', 'middle'])) return 'pref:balanced';
+      return has(q, ['no se', 'not sure', 'dont know']) ? 'pref:any' : null;
     case 'body':
       if (has(q, ['suv', 'crossover', 'familiar', 'family'])) return 'body:suv';
       if (has(q, ['camioneta', 'pickup', 'truck', 'troca'])) return 'body:truck';
@@ -178,7 +260,7 @@ function parseStage(q, raw) {
     case 'band': {
       const n = Number((q.match(/\d[\d,.]*/) || [''])[0].replace(/[,.]/g, ''));
       const v = n && n < 1000 ? n * 1000 : n;
-      if (v) return v <= BAND_MAX.low ? 'band:low' : v <= BAND_MAX.mid ? 'band:mid' : 'band:high';
+      if (v) return v <= BAND_MAX.b1 ? 'band:b1' : v <= BAND_MAX.b2 ? 'band:b2' : v <= BAND_MAX.b3 ? 'band:b3' : 'band:b4';
       return has(q, ['no se', 'no tengo', 'any', 'not sure', 'dont know']) ? 'band:any' : null;
     }
     case 'path':
@@ -214,6 +296,27 @@ const field = (ctx, key, value, label) => {
 // Unidad nombrada en el mensaje (marca y modelo, o solo el modelo).
 function findUnit(q) {
   return units.find((u) => q.includes(norm(`${u.make} ${u.model}`)) || q.includes(norm(u.model).split(' ')[0])) || null;
+}
+
+// Autos del inventario publicado (no solo los del showroom) que el cliente nombra: marca y modelo, o un modelo de 4 o más letras.
+function catalogMatches(q) {
+  const showroom = new Set(units.map((u) => u.stock));
+  return catalog.filter((u) => {
+    if (showroom.has(u.stock)) return false;
+    const full = norm(`${u.make} ${u.model}`);
+    const token = norm(u.model).split(' ')[0];
+    return q.includes(full) || (token.length >= 4 && new RegExp(`\\b${token}\\b`).test(q));
+  });
+}
+
+function listMatches(list) {
+  const sorted = [...list].sort((a, b) => a.price - b.price);
+  const top = sorted.slice(0, 3);
+  flow.focus = top[0];
+  flow.stage = 'path';
+  const rows = top.map((u) => line('row', { name: unitName(u), price: fmtPrice(u), km: fmtKm(u) })).join('\n');
+  const more = sorted.length > 3 ? line('listMore', { n: sorted.length - 3 }) : '';
+  return reply([line('listIntro', { n: sorted.length, model: `${top[0].make} ${top[0].model}` }), rows, more].filter(Boolean).join('\n\n'), ch([['act:testdrive', line('c.testDrive')], ['path:ask', line('c.howPay')], ['cmp:start', line('c.compare')]]));
 }
 
 // Unidad ya retirada del inventario publicado que el cliente menciona por nombre.
@@ -258,6 +361,10 @@ export function demoReply(input, ctx) {
   if (!mentioned) {
     const gone = findSold(q);
     if (gone) return soldReply(gone);
+  }
+  if (!mentioned) {
+    const found = catalogMatches(q);
+    if (found.length) return listMatches(found);
   }
   if (mentioned) {
     flow.focus = mentioned;

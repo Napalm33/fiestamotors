@@ -9,7 +9,8 @@
     "servicio": "Service appointment",
     "contacto": "Contact us",
     "calculadora": "Payment calculator",
-    "solicitud_credito": "Credit application"
+    "solicitud_credito": "Credit application",
+    "inventario": "Full inventory"
   },
   "sitePanel": {
     "openTab": "Open in new tab",
@@ -99,13 +100,17 @@
       "body": {
         "suv": "SUV",
         "truck": "Pickup truck",
-        "compact": "Compact or sporty"
+        "compact": "Sedan or hatchback"
       },
-      "askBand": "What price range do you have in mind? (listed price, plus HST and licensing)",
+      "askBand": "What budget works for you? That's the listed price, plus HST and licensing.",
       "band": {
         "low": "Up to $25,000",
         "mid": "$25,000 to $35,000",
-        "high": "Over $35,000"
+        "high": "Over $35,000",
+        "b1": "Up to $10,000",
+        "b2": "$10,000 to $20,000",
+        "b3": "$20,000 to $30,000",
+        "b4": "Over $30,000"
       },
       "recIntro": "From what you tell me, these are the options I see in the showroom:",
       "recNear": "None match exactly what you're after; these are the closest:",
@@ -204,13 +209,62 @@
         "sendAdvisor": "Send summary to an advisor",
         "compare": "Compare it with other options",
         "howPay": "How would I pay for it?",
-        "similar": "See similar options"
+        "similar": "See similar options",
+        "otherType": "See another type of car",
+        "openInventory": "See the full inventory"
       },
       "uPrice": "{price} plus HST and licensing",
       "uDrive": "{v}",
       "uNone": "an advisor confirms the details",
       "unitCard": "Here's what I have on the {name}: {details}. Any missing detail is confirmed by an advisor.",
-      "sold": "The {name} no longer appears in our published inventory, so I can't offer it. If you like, an advisor can confirm whether something similar is coming, or I can show you similar options we do have."
+      "sold": "The {name} no longer appears in our published inventory, so I can't offer it. If you like, an advisor can confirm whether something similar is coming, or I can show you similar options we do have.",
+      "askWorry": "To help you properly, what worries you most or holds you back today?",
+      "worry": {
+        "credit": "That I won't be approved for credit",
+        "price": "That it will be too expensive",
+        "which": "I don't know which car suits me",
+        "process": "The process seems complicated",
+        "none": "Nothing, I just want to see options"
+      },
+      "worryReply": {
+        "credit": "That's one of the most common worries and it has a way forward. Fiesta Motors works with different credit profiles, including no credit history in Canada. Approval and rate are set by the lender based on your profile, so I can't promise anything, but I'll walk you through it step by step.",
+        "price": "I understand. Not all our cars are expensive: prices start at {min} and half cost less than {median} (listed price, plus HST and licensing).",
+        "which": "That's what I'm here for: with a few simple questions we narrow it down to the ones that really suit you.",
+        "process": "It's simpler than it looks: you see the car, an advisor confirms availability and final price, and if you need financing it's a short application. I'll be with you through each part.",
+        "none": "Perfect, let's get practical."
+      },
+      "askUse": "What will you mainly use it for?",
+      "use": {
+        "city": "Getting around town and to work",
+        "family": "For the family",
+        "highway": "Highway and long trips",
+        "work": "Work or hauling",
+        "unknown": "I don't know yet"
+      },
+      "useWhy": {
+        "city": "daily city driving",
+        "family": "the family",
+        "highway": "highway and long trips",
+        "work": "work and hauling"
+      },
+      "useUnknown": "No worries, you don't need to know yet.",
+      "askPref": "No problem, let's make it easier. What matters most to you?",
+      "pref": {
+        "cheap": "The most affordable",
+        "balanced": "A balance of price and mileage",
+        "new": "Newer with lower mileage"
+      },
+      "prefText": {
+        "cheap": "the most affordable ones",
+        "balanced": "mid-priced options",
+        "new": "the newest, lowest-mileage ones"
+      },
+      "recPref": "Since you don't have a set budget yet, I'll start with {what}. Here's what I see:",
+      "recUse": "Thinking about {why} and your budget, here's what I see:",
+      "tooUnclear": "That's okay: it's normal not to have it clear at first. So I don't throw random options at you, browse the full inventory at your own pace or I'll connect you with an advisor who can help you decide, no commitment.",
+      "inventory": "I'm opening Fiesta Motors' full inventory.",
+      "listIntro": "I have {n} {model} listed. These are the most affordable:",
+      "listMore": "There are {n} more in the full inventory."
     },
     "offerCall": "To move faster we can also talk by voice right here, without leaving this screen. Would you like to call?",
     "offerCallYes": "Call now",

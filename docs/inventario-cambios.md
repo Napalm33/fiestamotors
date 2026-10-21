@@ -1,6 +1,6 @@
 # Cambios del inventario
 
-Última revisión: 2026-10-21T02:07:34.798Z · 111 unidades publicadas · fuente: feed público de ZopDealer.
+Última revisión: 2026-10-21T03:53:50.272Z · 111 unidades publicadas · fuente: feed público de ZopDealer.
 
 ## Unidades del showroom
 

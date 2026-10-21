@@ -9,7 +9,8 @@
     "servicio": "Cita de servicio",
     "contacto": "Contacto",
     "calculadora": "Calculadora de pagos",
-    "solicitud_credito": "Solicitud de crédito"
+    "solicitud_credito": "Solicitud de crédito",
+    "inventario": "Inventario completo"
   },
   "sitePanel": {
     "openTab": "Abrir en pestaña nueva",
@@ -99,13 +100,17 @@
       "body": {
         "suv": "SUV",
         "truck": "Camioneta (pickup)",
-        "compact": "Compacto o deportivo"
+        "compact": "Sedán o hatchback"
       },
-      "askBand": "¿Qué rango de precio tienes en mente? (precio publicado, más HST y licencia)",
+      "askBand": "¿Qué presupuesto te acomoda? Es el precio publicado, más HST y licencia.",
       "band": {
         "low": "Hasta $25,000",
         "mid": "$25,000 a $35,000",
-        "high": "Más de $35,000"
+        "high": "Más de $35,000",
+        "b1": "Hasta $10,000",
+        "b2": "$10,000 a $20,000",
+        "b3": "$20,000 a $30,000",
+        "b4": "Más de $30,000"
       },
       "recIntro": "Con lo que me cuentas, estas son las opciones que veo en el showroom:",
       "recNear": "Ninguna coincide exacto con lo que buscas; estas son las más cercanas:",
@@ -204,13 +209,62 @@
         "sendAdvisor": "Enviar resumen a un asesor",
         "compare": "Compararlo con otras opciones",
         "howPay": "¿Cómo lo pagaría?",
-        "similar": "Ver opciones parecidas"
+        "similar": "Ver opciones parecidas",
+        "otherType": "Ver otro tipo de auto",
+        "openInventory": "Ver el inventario completo"
       },
       "uPrice": "{price} más HST y licencia",
       "uDrive": "tracción {v}",
       "uNone": "los datos los confirma un asesor",
       "unitCard": "Esto tengo del {name}: {details}. Cualquier dato que falte lo confirma un asesor.",
-      "sold": "El {name} ya no aparece en nuestro inventario publicado, así que no te lo puedo ofrecer. Si quieres, un asesor te confirma si hay algo parecido, o te muestro opciones similares que sí tenemos."
+      "sold": "El {name} ya no aparece en nuestro inventario publicado, así que no te lo puedo ofrecer. Si quieres, un asesor te confirma si hay algo parecido, o te muestro opciones similares que sí tenemos.",
+      "askWorry": "Para ayudarte bien, ¿qué es lo que más te preocupa o te frena hoy?",
+      "worry": {
+        "credit": "Que no me aprueben el crédito",
+        "price": "Que sea muy caro",
+        "which": "No sé qué auto me conviene",
+        "process": "El proceso me parece complicado",
+        "none": "Nada, solo quiero ver opciones"
+      },
+      "worryReply": {
+        "credit": "Es de las preocupaciones más comunes y tiene solución. Fiesta Motors trabaja con distintos perfiles de crédito, incluso sin historial en Canadá. La aprobación y la tasa las define la financiera según tu perfil, así que no te prometo nada, pero sí te acompaño paso a paso.",
+        "price": "Entiendo. No todos nuestros autos son caros: hay desde {min} y la mitad cuestan menos de {median} (precio publicado, más HST y licencia).",
+        "which": "Para eso estoy: con unas preguntas sencillas reducimos las opciones hasta quedarnos con las que de verdad te convienen.",
+        "process": "Es más sencillo de lo que parece: ves el auto, un asesor confirma disponibilidad y precio final, y si necesitas financiamiento es una solicitud corta. Yo te acompaño en cada parte.",
+        "none": "Perfecto, vamos a lo práctico."
+      },
+      "askUse": "¿Para qué lo vas a usar principalmente?",
+      "use": {
+        "city": "Moverme por la ciudad y al trabajo",
+        "family": "Para la familia",
+        "highway": "Carretera y viajes largos",
+        "work": "Trabajo o carga",
+        "unknown": "Todavía no lo sé"
+      },
+      "useWhy": {
+        "city": "uso diario en la ciudad",
+        "family": "la familia",
+        "highway": "carretera y viajes largos",
+        "work": "trabajo y carga"
+      },
+      "useUnknown": "No te preocupes, no hace falta saberlo ya.",
+      "askPref": "Sin problema, lo hacemos más fácil. ¿Qué te importa más?",
+      "pref": {
+        "cheap": "Que sea lo más económico",
+        "balanced": "Un equilibrio entre precio y kilometraje",
+        "new": "Que sea más nuevo y con menos kilometraje"
+      },
+      "prefText": {
+        "cheap": "los más económicos",
+        "balanced": "opciones de precio medio",
+        "new": "los más nuevos y de menor kilometraje"
+      },
+      "recPref": "Como aún no tienes un presupuesto definido, empiezo por {what}. Estas son las opciones que veo:",
+      "recUse": "Pensando en {why} y en tu presupuesto, estas son las opciones que veo:",
+      "tooUnclear": "No pasa nada: es normal no tenerlo claro al inicio. Para no llenarte de opciones al azar, mira el inventario completo con calma o te comunico con un asesor que te ayude a decidir, sin compromiso.",
+      "inventory": "Te abro el inventario completo de Fiesta Motors.",
+      "listIntro": "Tengo {n} {model} publicados. Estos son los más económicos:",
+      "listMore": "Hay {n} más en el inventario completo."
     },
     "offerCall": "Para avanzar más rápido también podemos hablar por voz aquí mismo, sin salir de esta pantalla. ¿Quieres llamar?",
     "offerCallYes": "Llamar ahora",

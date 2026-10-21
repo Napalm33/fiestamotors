@@ -31,7 +31,7 @@ En "Nuevo agente" elige **Agente en blanco**. No uses Architect ni una plantilla
 
 | Nombre | Parámetros | Descripción |
 |---|---|---|
-| `abrir_pagina_sitio` | `pagina` (texto, obligatorio): `test_drive`, `trade_in`, `servicio`, `contacto`, `calculadora` o `solicitud_credito` | Abre en pantalla la página del sitio de Fiesta Motors que el cliente necesita. Úsala después de avisar al cliente. |
+| `abrir_pagina_sitio` | `pagina` (texto, obligatorio): `test_drive`, `trade_in`, `servicio`, `contacto`, `calculadora`, `solicitud_credito` o `inventario` | Abre en pantalla la página del sitio de Fiesta Motors que el cliente necesita. Úsala después de avisar al cliente. |
 | `abrir_whatsapp` | ninguno | Abre WhatsApp con un mensaje que incluye la unidad que ve el cliente. Úsala para pasar con una persona. |
 | `ofrecer_llamada` | ninguno | Muestra al cliente una invitación a pasar de texto a voz. Úsala cuando la voz agilice el proceso. |
 
