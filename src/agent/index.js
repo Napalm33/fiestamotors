@@ -62,9 +62,11 @@ export function initAgent() {
   const channel = () => (inVoice ? 'web_voz' : 'web_texto');
 
   // `choices`: respuestas rápidas bajo el mensaje. Al tocar una se envía su texto y los botones se retiran.
-  function addMessage(role, text, choices = []) {
+  function addMessage(role, text, choices = [], { sticky = false } = {}) {
     removeThinking();
-    log.querySelectorAll('.fm-choices').forEach((n) => n.remove());
+    // Las respuestas rápidas se retiran con el siguiente mensaje; las "persistentes" (invitaciones del agente) solo
+    // las retira el cliente al tocarlas o al escribir.
+    log.querySelectorAll(role === 'user' ? '.fm-choices' : '.fm-choices:not([data-sticky])').forEach((n) => n.remove());
     const el = document.createElement('p');
     el.className = `fm-msg fm-msg--${role}`;
     el.textContent = text;
@@ -72,6 +74,7 @@ export function initAgent() {
     if (choices.length) {
       const row = document.createElement('div');
       row.className = 'fm-choices';
+      if (sticky) row.dataset.sticky = '1';
       choices.forEach((choice) => {
         const { label, run } = typeof choice === 'string' ? { label: choice } : choice;
         const b = document.createElement('button');
@@ -129,7 +132,7 @@ export function initAgent() {
       ['testDrive', () => sendUser(t('agent.userMsg.testDrive'))],
       ['payment', () => sendUser(t('agent.userMsg.payment'))],
       ['advisor', () => sendUser(t('agent.userMsg.advisor'))],
-      ['whatsapp', () => runAction({ type: 'whatsapp' })],
+      ['whatsapp', () => runAction({ type: 'whatsapp' }, { direct: true })],
     ];
     const box = $('.fm-agent__chips');
     box.replaceChildren(
@@ -144,17 +147,30 @@ export function initAgent() {
     );
   }
 
-  function runAction(action) {
+  // Devuelve si la acción se pudo cumplir: así el agente recibe una respuesta honesta de la herramienta.
+  // `direct`: viene de un toque del cliente. Sin él (la orden llegó del agente o de una respuesta tardía) el navegador
+  // bloquearía window.open, así que WhatsApp se ofrece como un botón que el cliente toca.
+  function runAction(action, { direct = false } = {}) {
     if (action.type === 'offer_call') {
       // Solo se ofrece si la voz está disponible; sin ella no se promete.
-      if (conn.supportsVoice && !inVoice) {
-        addMessage('agent', t('agent.offerCall'), [
-          { label: t('agent.offerCallYes'), run: startVoice },
-          { label: t('agent.offerCallNo'), run: () => sendUser(t('agent.offerCallNoMsg')) },
-        ]);
+      if (!conn.supportsVoice || inVoice) return false;
+      addMessage('agent', t('agent.offerCall'), [
+        { label: t('agent.offerCallYes'), run: startVoice },
+        { label: t('agent.offerCallNo'), run: () => sendUser(t('agent.offerCallNoMsg')) },
+      ], { sticky: true });
+      return true;
+    }
+    if (action.type === 'open_panel') return openSitePage(action.page);
+    if (action.type === 'whatsapp') {
+      if (!whatsappConfigured) {
+        addMessage('system', t('agent.whatsappMissing'));
+        return false;
       }
-    } else if (action.type === 'open_panel') openSitePage(action.page);
-    else if (action.type === 'whatsapp' && !openWhatsApp(action.text) && !whatsappConfigured) addMessage('system', t('agent.whatsappMissing'));
+      if (direct) return openWhatsApp(action.text);
+      addMessage('agent', t('agent.whatsappPrompt'), [{ label: t('agent.whatsappGo'), run: () => openWhatsApp(action.text) }], { sticky: true });
+      return true;
+    }
+    return false;
   }
 
   function handleStatus(status) {

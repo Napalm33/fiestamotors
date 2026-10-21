@@ -216,6 +216,8 @@
     "offerCallYes": "Llamar ahora",
     "offerCallNo": "Seguir por texto",
     "offerCallNoMsg": "Prefiero seguir por texto",
-    "voiceGreeting": "Hola, soy Sofía, la asistente virtual de Fiesta Motors, una inteligencia artificial. ¿En qué te ayudo?"
+    "voiceGreeting": "Hola, soy Sofía, la asistente virtual de Fiesta Motors, una inteligencia artificial. ¿En qué te ayudo?",
+    "whatsappPrompt": "Te dejo el acceso directo para hablar con un asesor por WhatsApp.",
+    "whatsappGo": "Abrir WhatsApp"
   }
 }

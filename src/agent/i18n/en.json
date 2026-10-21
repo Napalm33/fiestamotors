@@ -216,6 +216,8 @@
     "offerCallYes": "Call now",
     "offerCallNo": "Keep texting",
     "offerCallNoMsg": "I'd rather keep texting",
-    "voiceGreeting": "Hi, I'm Sofia, Fiesta Motors' virtual assistant, an AI. How can I help?"
+    "voiceGreeting": "Hi, I'm Sofia, Fiesta Motors' virtual assistant, an AI. How can I help?",
+    "whatsappPrompt": "Here's the quick link to talk to an advisor on WhatsApp.",
+    "whatsappGo": "Open WhatsApp"
   }
 }

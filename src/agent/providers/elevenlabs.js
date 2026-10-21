@@ -26,18 +26,19 @@ export class ElevenLabsProvider {
         if (!SITE_PAGES[pagina]) {
           return `Error: no se abrió nada. El parámetro "pagina" ${pagina ? `vale "${pagina}", que no existe` : 'no llegó'}. Valores válidos: ${Object.keys(SITE_PAGES).join(', ')}. No le digas al cliente que se abrió.`;
         }
-        this.h.onAction({ type: 'open_panel', page: pagina });
-        return 'Página abierta en pantalla';
+        return this.h.onAction({ type: 'open_panel', page: pagina }) === false
+          ? 'Error: no se pudo abrir la página. No le digas al cliente que se abrió.'
+          : 'Página abierta en pantalla';
       },
       // El agente decide cuándo la llamada agiliza el proceso; el widget muestra la invitación.
-      ofrecer_llamada: () => {
-        this.h.onAction({ type: 'offer_call' });
-        return 'Invitación a llamar mostrada al cliente';
-      },
-      abrir_whatsapp: () => {
-        this.h.onAction({ type: 'whatsapp' });
-        return 'WhatsApp abierto';
-      },
+      ofrecer_llamada: () =>
+        this.h.onAction({ type: 'offer_call' }) === false
+          ? 'No disponible: la voz no está activa en este momento. No menciones la llamada.'
+          : 'Invitación a llamar mostrada al cliente. Él decide si la acepta.',
+      abrir_whatsapp: () =>
+        this.h.onAction({ type: 'whatsapp' }) === false
+          ? 'Error: WhatsApp aún no está configurado en este sitio. No digas que se abrió; ofrece que un asesor lo contacte o el teléfono 416-855-6663.'
+          : 'Botón de WhatsApp mostrado al cliente: al tocarlo se abre la conversación con el asesor.',
     };
     // El SDK pesa mucho: se descarga solo cuando el cliente abre el agente.
     const { Conversation } = await import('@elevenlabs/client');
