@@ -7,12 +7,11 @@ import { ElevenLabsProvider } from './providers/elevenlabs.js';
 //   startVoice(ctx) · stopVoice(ctx) · setMicMuted(bool)   (solo si supportsVoice)
 // Eventos hacia la interfaz (handlers):
 //   onMessage({role,text}) · onThinking(bool) · onStatus(status) · onError(msg) · onAction(action)
-const env = import.meta.env;
-
 export function createConnection(handlers) {
-  const agentId = env.VITE_ELEVENLABS_AGENT_ID;
-  const apiUrl = env.VITE_AGENT_API_URL;
-  const textProvider = env.VITE_AGENT_TEXT_PROVIDER || (agentId ? 'elevenlabs' : apiUrl ? 'api' : 'demo');
+  // Referencias directas: así Vite las reemplaza al compilar y el paquete del Artifact puede fijarlas (ver vite.embed.config.js).
+  const agentId = import.meta.env.VITE_ELEVENLABS_AGENT_ID;
+  const apiUrl = import.meta.env.VITE_AGENT_API_URL;
+  const textProvider = import.meta.env.VITE_AGENT_TEXT_PROVIDER || (agentId ? 'elevenlabs' : apiUrl ? 'api' : 'demo');
 
   if (textProvider === 'api' && apiUrl) {
     const provider = new ApiProvider(handlers, { url: apiUrl });

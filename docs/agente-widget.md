@@ -76,3 +76,8 @@ Configuración completa de ElevenLabs en `docs/elevenlabs/`.
 
 El sitio avisa con el evento `fm:site-end` (en `window` o `document`) que el cliente llegó al final. El agente abre su panel **una sola vez por visita** (por pestaña, con `sessionStorage`; si el almacenamiento no está disponible, una vez por carga de página). No enfoca el campo de texto, para que en celular no se abra el teclado solo. Si el cliente ya lo había abierto, no hace nada. Una recarga en la misma pestaña no lo vuelve a abrir.
 Contrato para el sitio: `window.dispatchEvent(new CustomEvent('fm:site-end'))`.
+
+## Agente en vivo (ElevenLabs) y el Artifact
+
+- El ID del agente va en `.env` (`VITE_ELEVENLABS_AGENT_ID`, nunca se sube al repo; en Netlify, como variable de entorno al desplegar). Con él, `npm run dev` conecta con el agente real (texto; la voz pide micrófono). Se probó contra el agente "Demo Fiesta Motors": conecta, sigue el embudo, cambia de idioma, no habla de garantías y reconoce que la Rogue ya no está.
+- El paquete que se inserta en los Artifacts (`npm run build:embed`) se compila siempre en modo demostración, aunque exista el `.env`, porque el Artifact bloquea las conexiones externas y el panel mostraría un error. Solo con `FM_EMBED_LIVE=1 npm run build:embed` se compila en vivo.

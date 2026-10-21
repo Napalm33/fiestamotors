@@ -37,6 +37,8 @@ En "Nuevo agente" elige **Agente en blanco**. No uses Architect ni una plantilla
 
 Activa "esperar respuesta" (el agente espera a que la herramienta termine) en las tres.
 
+**Eventos del cliente (pestaña Avanzado).** Además de crear las herramientas, asegúrate de que estén activados los eventos de herramientas que ofrezca la lista (`client_tool_call` si aparece, y `agent_tool_request` y `agent_tool_response`). Si no, el agente dice "ya te abrí el formulario" y a la página nunca llega la orden: lo vimos probando con el agente real. La prueba para saber si ya funciona: pedir "ábreme el formulario de test drive" en el sitio y que se abra el panel de la página.
+
 ## 3. Pestaña de seguridad (Security)
 - **Lista de dominios permitidos (allowlist):** agrega el dominio donde vivirá el sitio. Mientras pruebas en local agrega también `localhost`. El ID del agente queda visible en el código de la página, así que sin allowlist cualquiera podría usarlo y gastar tus minutos. Actívala antes de compartir cualquier enlace.
 - **Overrides (sobrescrituras):** enciende **solo "Text only"** (solo texto). ✔ El modo de texto del widget lo manda como sobrescritura y, si está apagado, la conexión falla. Deja apagados system prompt, primer mensaje, voz y modelo: el widget no los usa y apagados son más seguros.
