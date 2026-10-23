@@ -51,6 +51,7 @@ export class ElevenLabsProvider {
       onDisconnect: (details) => {
         if (this.conv !== conv) return;
         this.conv = null;
+        this.voice = false;
         this.h.onStatus(details.reason === 'user' ? 'ended' : 'disconnected');
       },
       onError: (message) => this.h.onError(message),
@@ -95,9 +96,11 @@ export class ElevenLabsProvider {
     await this.#start(ctx, true);
   }
 
-  async stopVoice(ctx) {
+  // Al colgar no se abre otra sesión de texto: el widget la crea cuando el cliente escribe.
+  // Una sesión vacía se registra en ElevenLabs como una conversación más y genera un reporte sin datos.
+  async stopVoice() {
     await this.#end();
-    await this.#start(ctx, false);
+    this.voice = false;
   }
 
   setMicMuted(muted) {
