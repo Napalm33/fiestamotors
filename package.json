@@ -1,0 +1,32 @@
+{
+  "name": "fiestamotors",
+  "version": "1.0.0",
+  "description": "Fiesta Motors — showroom inmersivo (demo)",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Napalm33/fiestamotors.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Napalm33/fiestamotors/issues"
+  },
+  "homepage": "https://github.com/Napalm33/fiestamotors#readme",
+  "devDependencies": {
+    "playwright-core": "^1.64.0",
+    "vite": "^5.4.21"
+  },
+  "dependencies": {
+    "gsap": "^3.12.5",
+    "lenis": "^1.0.45",
+    "three": "^0.186.1"
+  },
+  "private": true,
+  "type": "module"
+}

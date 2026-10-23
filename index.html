@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#0d0b0a" />
+    <title>Fiesta Motors Showroom</title>
+    <link rel="stylesheet" href="/src/styles/main.css" />
+  </head>
+  <body>
+    <header class="bar">
+      <a class="brand" href="#top" data-i18n-aria="brand">FIESTA MOTORS</a>
+      <button class="lang" id="lang" type="button" aria-label="Cambiar idioma / Change language">EN</button>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="hero-title">
+        <video class="hero__video" id="hero-video" muted loop playsinline preload="auto"></video>
+        <div class="hero__shade"></div>
+        <div class="hero__copy">
+          <p class="eyebrow" data-i18n="hero.eyebrow"></p>
+          <h1 id="hero-title" data-i18n="hero.title"></h1>
+          <a class="btn btn--red" href="#units" data-i18n="hero.cta"></a>
+        </div>
+        <button class="hero__play" id="hero-play" type="button" hidden data-i18n-aria="hero.play"></button>
+      </section>
+
+
+      <section class="showroom" id="showroom" aria-labelledby="sr-title">
+        <div class="sr__stage" id="sr-stage">
+          <canvas id="sr-canvas" aria-hidden="true"></canvas>
+          <div class="sr__veil" id="sr-veil"></div>
+
+          <div class="sr__garage" id="sr-garage">
+            <div class="sr__copy">
+              <h2 id="sr-title"></h2>
+              <p data-i18n="showroom.hint"></p>
+            </div>
+            <div class="sr__card" id="sr-card" aria-live="polite"></div>
+            <div class="sr__nav">
+              <button type="button" id="sr-prev" data-i18n-aria="showroom.prev">‹</button>
+              <span id="sr-count" aria-live="polite"></span>
+              <button type="button" id="sr-next" data-i18n-aria="showroom.next">›</button>
+            </div>
+          </div>
+
+          <div class="sr__viewer" id="sr-viewer" hidden>
+            <button type="button" class="sr__back" id="sr-back" data-i18n="showroom.back"></button>
+            <div class="sr__views" id="sr-views" role="group" data-i18n-aria="showroom.views"></div>
+            <p class="sr__drag" data-i18n="showroom.drag"></p>
+            <aside class="sr__panel" id="sr-panel"></aside>
+          </div>
+        </div>
+      </section>
+
+      <section class="units" id="units" aria-labelledby="units-title" hidden>
+        <h2 id="units-title" data-i18n="units.title"></h2>
+        <div class="strip" id="strip" role="listbox" tabindex="0" data-i18n-aria="units.list"></div>
+        <article class="detail" id="detail" aria-live="polite"></article>
+      </section>
+
+      <section class="contact" aria-labelledby="contact-title">
+        <h2 id="contact-title" data-i18n="contact.title"></h2>
+        <p><span data-i18n="contact.city"></span></p>
+        <p><a class="phone" href="tel:+14168556663">416-855-6663</a></p>
+        <p class="muted"><span data-i18n="contact.hours"></span></p>
+      </section>
+    </main>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
