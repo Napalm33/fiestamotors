@@ -18,8 +18,25 @@ export function contextText(ctx) {
 }
 
 // Variables dinámicas de ElevenLabs: el prompt del agente las usa como {{idioma}}, {{unidad}}, etc.
+// Identificador anónimo del visitante, estable entre conversaciones (texto y llamada) en el mismo navegador.
+// Llega en el webhook post-llamada y permite unir varias conversaciones de una misma persona en un solo reporte.
+function visitorId() {
+  const key = 'fm-agent-visitor';
+  try {
+    let id = localStorage.getItem(key);
+    if (!id) {
+      id = (crypto.randomUUID ? crypto.randomUUID() : `v-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 10)}`);
+      localStorage.setItem(key, id);
+    }
+    return id;
+  } catch {
+    return 'sin-id';
+  }
+}
+
 export function dynamicVariables(ctx) {
   return {
+    visitor_id: visitorId(),
     idioma: ctx.idioma,
     canal: ctx.canal,
     seccion: ctx.seccion,
