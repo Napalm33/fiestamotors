@@ -1,0 +1,9 @@
+{
+  "name": "fiesta-whatsapp-watchdog",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Recibe los leads de Fiesta Motors (ntfy) y los envía al grupo de WhatsApp Web, sin consultar la hoja ni gastar uso de Claude.",
+  "scripts": { "start": "node watchdog.mjs", "prueba": "node watchdog.mjs --dry-run" },
+  "dependencies": { "playwright": "^1.48.0" }
+}
