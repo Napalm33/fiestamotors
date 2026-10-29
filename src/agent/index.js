@@ -3,7 +3,7 @@ import { detectLang } from './core/lang.js';
 import { t } from './core/i18n.js';
 import { getUnit } from './core/inventory.js';
 import { unitName } from './core/format.js';
-import { buildContext } from './context.js';
+import { buildContext, noteMessage } from './context.js';
 import { createConnection } from './connection.js';
 import { openSitePage } from './sitePanel.js';
 import { openWhatsApp, whatsappConfigured } from './whatsapp.js';
@@ -70,6 +70,7 @@ export function initAgent() {
     const el = document.createElement('p');
     el.className = `fm-msg fm-msg--${role}`;
     el.textContent = text;
+    if (role === 'user' || role === 'agent') noteMessage(role, text);
     log.append(el);
     if (choices.length) {
       const row = document.createElement('div');
